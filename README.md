@@ -1,15 +1,8 @@
-# Your startup name here
+# ParkPal
 
 [My Notes](notes.md)
 
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-> [!NOTE]
->  This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
-
-> [!NOTE]
->  If you are not familiar with Markdown then you should review the [documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) before continuing.
+This application is a platform to connect event-goers to local driveway hosts that are willing to rent out their driveway space as event parking.
 
 ## 🚀 Specification Deliverable
 
@@ -18,7 +11,7 @@ A brief description of the application here. Lorem ipsum dolor sit amet, consect
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
+- [x] Proper use of Markdown
 - [ ] A concise and compelling elevator pitch
 - [ ] Description of key features
 - [ ] Description of how you will use each technology
@@ -26,37 +19,44 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Unless you arrive an hour or two early, event parking is always an inconsistent, dreaded part of going to the game, concert, festival, etc. Instead of hoping that you'll find a magic street parking spot, confirm your time and space by booking a local nieghbors driveway as your parking for the night. The homeowner makes the easiest passive income of their lives, and both parties walk away with a great experience. 
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](ParkpalMocks.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The web app design will be as simple and intuitive as possible, since people want to think about parking the least they can. There will be a page with a map to find a driveway easily, as well as a simple form to post a listing.
 
 ```mermaid
 sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
+    actor Driver
+    actor Host
+    Driver->>Backend: User searches for and books driveway
+    Host->>Backend: Host posts their driveway
 ```
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Hosts can post their driveway to specific events
+- Drivers can book host's driveway during their event
+- Hosts can collect payouts and Drivers can pay directly through the web app
+- Hosts and Drivers can communicate through the app
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Structure basic layout of all of the pages including auth, driveway select page, and hosting dashboard
+- **CSS** - Set a consistent pallet for colors and reusable, responsive designs 
+- **React** - React will be used for building the forms to collect information from drivers and hosts as well as setting the state for pages. 
+- **Service** - Backend service with endpoints for:
+  - Authentication
+  - Posting driveways
+  - Looking up available driveways by event
+  - Booking Specific Driveways
+  - Messaging between host and driver
+- **DB/Login** - Store users, venues, events, driveways, and bookings in database with clear rules to certain data
+- **WebSocket** - The database will be the source of truth for available driveways and bookings
 
 ## 🚀 AWS deliverable
 
