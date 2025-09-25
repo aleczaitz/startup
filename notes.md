@@ -18,9 +18,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
-
-The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
+This part was pretty easy, I just had some trouble figuring out that when you deploy with the `deployFiles.sh` script, the last part where you put the service or the `-s` meant that was going to be the subdomain. 
 
 ## CSS
 
