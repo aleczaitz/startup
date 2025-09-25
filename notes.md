@@ -26,6 +26,8 @@ I settled on an idea that would help me get really familiar with websockets, sin
 
 After deciding on the idea I built out a rough wireframe design in excalidraw, and updated the contents of the readme with that. It was super fast laying out the skeleton html files since I'd had experience doing this before.
 
+I realized after looking at the rubric that images and login placeholders were a requirement so I added those
+
 ## CSS
 
 ## React Part 1: Routing
