@@ -1,8 +1,8 @@
-# ParkPal
+# Jorvo
 
 [My Notes](notes.md)
 
-This application is a platform to connect event-goers to local driveway hosts that are willing to rent out their driveway space as event parking.
+This is a platform to race type against your friends and other strangers in real time
 
 ## 🚀 Specification Deliverable
 
@@ -16,50 +16,50 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Unless you arrive an hour or two early, event parking is always an inconsistent, dreaded part of going to the game, concert, festival, etc. Instead of hoping that you'll find a magic street parking spot, confirm your time and space by booking a local nieghbors driveway as your parking for the night. The homeowner makes the easiest passive income of their lives, and both parties walk away with a great experience. 
+Typing quickly and accurately is one of the most increasingly important skills for anyone in almost any industry. There are many websites to practice and measure your typing speed, put you are always only comparing your speed either with yourself. Plus everyone knows that multiplayer games are more fun than single player games. Welcome to Jorvo.
 
 ### Design
 
-![Design image](ParkpalMocks.png)
+![Design image](JorvoWireframe.png)
 
-The web app design will be as simple and intuitive as possible, since people want to think about parking the least they can. There will be a page with a map to find a driveway easily, as well as a simple form to post a listing.
+The web app design will be simple yet fun with lots of personality. There will be a home page, a challenge page, and a log page, and a single player page. 
 
 ```mermaid
 sequenceDiagram
-    actor Driver
-    actor Host
-    Driver->>Backend: User searches for and books driveway
-    Host->>Backend: Host posts their driveway
+    actor Player1
+    actor Player2
+    Player1->>Websocket: Players read and write real time
+    Player2->>Websocket: 
 ```
 
 ### Key features
 
-- Hosts can post their driveway to specific events
-- Drivers can book host's driveway during their event
-- Hosts can collect payouts and Drivers can pay directly through the web app
-- Hosts and Drivers can communicate through the app
+- A user can make an account and add their friends accounts
+- Users can challenge their friends to a race which puts both users against eachother typing the same quote
+- Both users will be able to see each others progress in real time
+- The user will have access to past games
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Structure basic layout of all of the pages including auth, driveway select page, and hosting dashboard
+- **HTML** - Structure basic layout of all of the pages including auth, challenge page, and friends and games dashboard
 - **CSS** - Set a consistent pallet for colors and reusable, responsive designs 
-- **React** - React will be used for building the forms to collect information from drivers and hosts as well as setting the state for pages. 
+- **React** - React will be used for building the forms for and updating the match between users in real time
 - **Service** - Backend service with endpoints for:
   - Authentication
-  - Posting driveways
-  - Looking up available driveways by event
-  - Booking Specific Driveways
-  - Messaging between host and driver
-- **DB/Login** - Store users, venues, events, driveways, and bookings in database with clear rules to certain data
-- **WebSocket** - The database will be the source of truth for available driveways and bookings
+  - Requesting/accepting friend invites
+  - Creating matches
+  - Reading match stats
+- **DB/Login** - Store users, relationships, match results
+- **WebSocket** - Create a websocket connection between users for the matches
+- **3rd Party API** - Use a quotes api as the text that is typed between users
 
 ## 🚀 AWS deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://jorvo.link).
 
 ## 🚀 HTML deliverable
 
