@@ -30,6 +30,8 @@ I realized after looking at the rubric that images and login placeholders were a
 
 ## CSS
 
+I realized that I could make the application a lot simpler that it was. I deleted the logs and the challenge pages, as I think it'd be best to just have the functionality of those in the home page. I also put the log in link inside of the log in button, just so their aren't two separate ones. It's less confusing that way.
+
 ## React Part 1: Routing
 
 ## React Part 2: Reactivity

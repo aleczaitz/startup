@@ -43,7 +43,7 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Structure basic layout of all of the pages including auth, challenge page, and friends and games dashboard
+- **HTML** - Structure basic layout of all of the pages including auth, and friends and games dashboard
 - **CSS** - Set a consistent pallet for colors and reusable, responsive designs 
 - **React** - React will be used for building the forms for and updating the match between users in real time
 - **Service** - Backend service with endpoints for:
