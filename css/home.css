@@ -1,0 +1,21 @@
+/* Styles for home.html (match lobby) */
+@import url('../main.css');
+
+nav menu { display:flex; gap:1rem; justify-content:center; padding:0; list-style:none; }
+nav a { color: var(--primary-color); text-decoration:none; font-weight:600; }
+
+section input[type="text"] { max-width: 360px; display:inline-block; margin-right:0.5rem; }
+
+.matchItem {
+  background: white;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.matchItem button { background: var(--primary-color); }
+
+.controls { display:flex; gap:0.5rem; align-items:center; margin-top:0.5rem; }
