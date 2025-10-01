@@ -32,6 +32,8 @@ I realized after looking at the rubric that images and login placeholders were a
 
 I realized that I could make the application a lot simpler that it was. I deleted the logs and the challenge pages, as I think it'd be best to just have the functionality of those in the home page. I also put the log in link inside of the log in button, just so their aren't two separate ones. It's less confusing that way.
 
+I've worked with react and tailwind before, so it was super exhausting to have to go back to the old way of applying css rules, but I did it. Adding the responsive designs took a while too, but once I kind of got the hang of it it wasn't too bad. I chose to make 3 color variables to base the styling off of, that way if I ever want to change the logo all I have to do is change those variables and it will apply to the whole application. 
+
 ## React Part 1: Routing
 
 ## React Part 2: Reactivity
