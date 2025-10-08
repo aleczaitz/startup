@@ -12,12 +12,12 @@ export function Home() {
             </div>
             <button className="accentButton">Start a new match</button>
         </section>
-        <section className="pastMatchesSection">
+        <section className="listSection">
             <h2>Past Matches</h2>
             <ul>
-                <li className="matchItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
-                <li className="matchItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
-                <li className="matchItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
+                <li className="listItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
+                <li className="listItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
+                <li className="listItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
             </ul>
         </section>
     </main>

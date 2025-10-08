@@ -13,29 +13,7 @@
 .friendInput {
   flex: 1;
 }
-
-.friendListSection {
-  padding: 0;
-  list-style: none;
-  max-width: 720px;
-  width: 100%;
-}
-
-.friendItem {
-  background: white;
-  padding: 0.6rem;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
 @media (max-width: 640px) {
   .addFriendSection { flex-direction: column; gap: 0.5rem; }
-  .friendItem { flex-direction: column; align-items: stretch; gap: 0.5rem; }
 }
 

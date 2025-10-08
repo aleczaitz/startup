@@ -118,3 +118,28 @@ ul {
 
 .primaryButton:active,
 .accentButton:active { transform: scale(0.98); }
+
+/* Lists */
+.listSection {
+  padding: 0;
+  list-style: none;
+  max-width: 720px;
+  width: 100%;
+}
+
+.listItem {
+  background: white;
+  padding: 0.6rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .listItem { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+}
