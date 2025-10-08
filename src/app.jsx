@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
-import { Play } from './play/play';
-import { Scores } from './scores/scores';
+import { Home } from './home/home';
+import { Friends } from './friends/friends';
 import { About } from './about/about';
 
 
@@ -34,8 +34,8 @@ export default function App() {
             </header>
             <Routes>
                 <Route path='/' element={<Login />} exact />
-                <Route path='/home' element={<Play />} />
-                <Route path='/friends' element={<Scores />} />
+                <Route path='/home' element={<Home />} />
+                <Route path='/friends' element={<Friends />} />
                 <Route path='/about' element={<About />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
