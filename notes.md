@@ -36,4 +36,8 @@ I've worked with react and tailwind before, so it was super exhausting to have t
 
 ## React Part 1: Routing
 
+This Part was probably the longest. It was nice to have the Simon app as a reference of how to convert to react, and once I got that down it wasn't too bad. I had never had experience converting regualar html to react/vite, only starting fresh with vite. I think it was good to get that experience of how React and Vite are actually built off of html though. After starting to convert everything, I realized my css was super jumbled and I needed to make everything more simple and unified. That took a while, and there were a couple of times where I realized two buttons, lists, or even whole pages were really similar so might as well make the css rules reusable accross the whole app.
+
+After this step, I feel like I understand React a lot better and am more confident in how my project works. 
+
 ## React Part 2: Reactivity
