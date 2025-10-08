@@ -10,13 +10,14 @@
   padding: 1rem 0;
   width: 100%;
   max-width: 720px;
+  align-items: stretch;
 }
 
 .matchCodeInput {
   width: 100%;
   font-size: 1rem;
   display: flex;
-  justify-content: center;
+  justify-content: stretch;
   gap: 0.5rem;
   transition: border-color .2s, box-shadow .2s;
 }
