@@ -1,3 +1,4 @@
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
@@ -39,6 +40,10 @@ export default function App() {
                 <Route path='/about' element={<About />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
+            <footer>
+                <p>&copy; 2025 Jorvo. All rights reserved. Product of Alec Zaitz</p>
+                <a href="https://github.com/aleczaitz/startup">Github</a>
+             </footer>
         </div>
     </BrowserRouter>
   )
