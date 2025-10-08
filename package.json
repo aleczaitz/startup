@@ -21,5 +21,9 @@
   "homepage": "https://github.com/aleczaitz/startup#readme",
   "devDependencies": {
     "vite": "^7.1.9"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react-bootstrap": "^2.10.10"
   }
 }
