@@ -5,8 +5,8 @@ export function Friends() {
         <main>
             <section>
                 <h2>Friends</h2>
-                <input type="text" id="friendNameInput" placeholder="Enter Friend's Name"/>
-                <button id="addFriendButton">Add Friend</button>
+                <input type="text" className="friendNameInput" placeholder="Enter Friend's Name"/>
+                <button className="addFriendButton">Add Friend</button>
                 <p>A list of added friends will appear hear</p>
             </section>
         </main>

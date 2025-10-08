@@ -10,8 +10,8 @@ export function Login() {
             <section className="loginSection">
                 <h2>Login</h2>
                 <form className ="loginForm" action="/home">
-                    <input type ="text" id="username" name="username" placeholder="Username" required />
-                    <input type ="password" id="password" name="password" placeholder="Password" required />
+                    <input type ="text" className="username" name="username" placeholder="Username" required />
+                    <input type ="password" className="password" name="password" placeholder="Password" required />
                     <button type="submit">Login</button>
                 </form>
             </section>
