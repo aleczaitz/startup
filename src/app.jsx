@@ -11,13 +11,13 @@ import { About } from './about/about';
 export default function App() {
   return (
     <BrowserRouter>
-        <div className="body">
+        <div>
             <header className="container-fluid">
                 <nav className="navbar fixed-top">
                     <div className="navbar-brand">
                         Jorvo
                     </div>
-                    <menu className="navbar-brand">
+                    <menu>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/">Login</NavLink>
                         </li>
