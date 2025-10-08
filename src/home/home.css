@@ -1,42 +1,91 @@
 /* Styles for home.html (match lobby) */
 @import url('../app.css');
 
-nav menu { display:flex; gap:1rem; justify-content:center; padding:0; list-style:none; }
-nav a { color: var(--primary-color); text-decoration:none; font-weight:600; }
+/* Form + controls */
+.matchStartSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  width: 100%;
+  max-width: 720px;
+}
 
-section input[type="text"] { max-width: 360px; display:inline-block; margin-right:0.5rem; }
+.matchCodeInput {
+  width: 100%;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.matchCodeInput:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(231,122,108,.25);
+}
+
+.startButton,
+.newMatchButton,
+.matchItem button {
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform .05s ease, opacity .2s ease, background-color .2s ease;
+}
+.startButton { background: var(--primary-color); color: var(--bg-color); }
+.newMatchButton { background: var(--accent-color); color: var(--bg-color); }
+.matchItem button { background: var(--primary-color); color: var(--bg-color); }
+
+.startButton:hover,
+.newMatchButton:hover,
+.matchItem button:hover { opacity: 0.9; }
+
+.startButton:active,
+.newMatchButton:active,
+.matchItem button:active { transform: scale(0.98); }
+
+/* Past matches */
+.pastMatchesSection {
+  padding: 0;
+  margin: 0.75rem 0 0;
+  list-style: none;
+  max-width: 720px;
+  width: 100%;
+
+}
 
 .matchItem {
-  background: white;
-  padding: 0.75rem;
+  background: #fff;
+  padding: 0.9rem 1rem;
   margin: 0.5rem 0;
-  border-radius: 8px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#matchStartSection {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 0.5rem;
+/* Utility row alignment */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
 }
-
-.matchItem button { background: var(--primary-color); }
-
-.controls { display:flex; gap:0.5rem; align-items:center; margin-top:0.5rem; }
 
 /* Responsive tweaks */
 @media (max-width: 640px) {
-    nav menu { flex-direction: column; gap: 0.5rem; }
-    section input[type="text"] { width: 100%; max-width: none; margin-right: 0; }
-    .controls { flex-direction: column; align-items: stretch; }
-    .matchItem { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  nav menu { flex-direction: column; gap: 0.5rem; }
+  .controls { flex-direction: column; align-items: stretch; }
+  .matchItem { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
 }
 
 @media (max-width: 420px) {
   header h1 { font-size: 1.25rem; }
-  .matchItem { padding: 0.6rem; }
+  .matchItem { padding: 0.75rem; }
   button { width: 100%; }
 }
