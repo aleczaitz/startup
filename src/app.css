@@ -41,7 +41,6 @@ footer {
   padding: 0.5rem;
   color: var(--primary-color);
   background: var(--bg-color);
-  border-top: 1px solid #ddd;
 }
 
 section {
@@ -80,7 +79,7 @@ menu {
 }
 
 h2 {
-  font-weight: 900;
+  font-weight: 700;
 }
 
 input {
@@ -142,4 +141,9 @@ ul {
 
 @media (max-width: 640px) {
   .listItem { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+}
+
+.githubLink {
+  color: var(--primary-color);
+  text-decoration: none;
 }

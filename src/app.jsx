@@ -41,9 +41,16 @@ export default function App() {
                 <Route path='*' element={<NotFound />} />
             </Routes>
             <footer>
-                <p>&copy; 2025 Jorvo. All rights reserved. Product of Alec Zaitz</p>
-                <a href="https://github.com/aleczaitz/startup">Github</a>
-             </footer>
+  <p>&copy; 2025 Jorvo. All rights reserved. Product of Alec Zaitz</p>
+  <a href="https://github.com/aleczaitz/startup" className="githubLink" target="_blank" rel="noopener noreferrer">
+    <img
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+      alt="GitHub Logo"
+      style={{ width: '24px', verticalAlign: 'middle', marginRight: '6px' }}
+    />
+    Github
+  </a>
+</footer>
         </div>
     </BrowserRouter>
   )
@@ -55,4 +62,4 @@ function NotFound() {
         <div>404 - Not Found</div>
         </main>
     );
-    }
+}

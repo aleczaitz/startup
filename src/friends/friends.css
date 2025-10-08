@@ -1,11 +1,7 @@
-/* Styles for friends.html */
-@import url('../app.css');
-
 .addFriendSection {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 1rem 0;
   width: 100%;
   max-width: 720px;
 }
