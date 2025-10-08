@@ -13,7 +13,7 @@ export default function App() {
     <BrowserRouter>
         <div>
             <header className="container-fluid">
-                <nav className="navbar fixed-top">
+                <nav className="navbar">
                     <div className="navbar-brand">
                         Jorvo
                     </div>

@@ -10,28 +10,37 @@
 
 html, body {
   height: 100%;
+  margin: 0;
 }
 
 body {
-  margin: 0;
+  display: flex;
+  flex-direction: column;
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   background: var(--bg-color);
   color: var(--primary-color);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.45;
 }
 
 header {
-  flex: 0 80px;
+  flex: 0 0 80px;
 }
 
 main {
-  flex: 1 calc(100vh - 110px);
+  flex: 0 0 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+}
+
+footer {
+  flex: 0 30px;
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  color: var(--primary-color);
+  background: var(--bg-color);
+  border-top: 1px solid #ddd;
 }
 
 section {
@@ -69,12 +78,7 @@ menu {
   font-size: 1.25rem;
 }
 
-footer {
-  flex: 0 30px;
-  text-align: center;
-  font-size: 0.75rem;
-  padding: 0.5rem;
-  color: var(--primary-color);
-  background: var(--bg-color);
-  border-top: 1px solid #ddd;
+h2 {
+  font-weight: 900;
+  
 }
