@@ -1,29 +1,41 @@
 /* Styles for friends.html */
 @import url('../app.css');
 
-nav menu { display:flex; gap:1rem; justify-content:center; padding:0; list-style:none; }
-nav a { color: var(--primary-color); text-decoration:none; font-weight:600; }
+.addFriendSection {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  width: 100%;
+  max-width: 720px;
+}
 
-#friendNameInput { max-width: 360px; margin-right:0.5rem; }
+.friendInput {
+  flex: 1;
+}
 
-.friendList { margin-top: 1rem; }
+.friendListSection {
+  padding: 0;
+  list-style: none;
+  max-width: 720px;
+  width: 100%;
+}
 
 .friendItem {
   background: white;
   padding: 0.6rem;
   border-radius: 8px;
   margin-bottom: 0.5rem;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
-/* Responsive tweaks */
 @media (max-width: 640px) {
-  nav menu { flex-direction: column; gap: 0.5rem; }
-  #friendNameInput { width: 100%; max-width: none; margin-right: 0; }
-  .friendItem { display:block; }
+  .addFriendSection { flex-direction: column; gap: 0.5rem; }
+  .friendItem { flex-direction: column; align-items: stretch; gap: 0.5rem; }
 }
 
-@media (max-width: 420px) {
-  header h1 { font-size: 1.25rem; }
-  .friendItem { padding: 0.5rem; }
-  button { width: 100%; }
-}
