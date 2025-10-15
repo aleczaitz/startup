@@ -4,7 +4,7 @@
   "description": "[My Notes](notes.md)",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "BROWSER='Arc' vite --open -- --app='Arc' --args='--incognito'",
     "build": "vite build",
     "preview": "vite preview"
   },
