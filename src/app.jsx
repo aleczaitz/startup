@@ -12,6 +12,8 @@ export default function App() {
 
     const [user, setUser] = useState(null);
 
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <BrowserRouter>
             <div>
@@ -20,7 +22,7 @@ export default function App() {
                         <div className="navbar-brand">
                             Jorvo
                         </div>
-                        <menu>
+                        <menu className="navMenu">
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/">Login</NavLink>
                             </li>
@@ -34,8 +36,13 @@ export default function App() {
                                 <NavLink className="nav-link" to="/about">About</NavLink>
                             </li>
                         </menu>
+                        <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>☰</button>
                     </nav>
                 </header>
+                {user && <div>{user}</div>}
+                <nav className={`drawer ${isOpen ? 'open' : ''}`}>
+                    <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>→</button>
+                </nav>
                 <Routes>
                     <Route path='/' element={<Login setUser = {setUser}/>} exact />
                     <Route path='/home' element={<Home />} />

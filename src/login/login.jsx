@@ -1,41 +1,46 @@
 import React, {useState} from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 import { ErrorMessage } from '../components/ErrorMessage';
 
-export function Login() {
+export function Login({setUser}) {
+  const navigate = useNavigate();
 
+  const [errorMsg, setErrorMsg] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+
 
   function handleLogin() {
     if (!username || !password) {
       setErrorMsg('Enter username and password');
     } else {
-      setErrorMsg('');
-      console.log("Login button clicked");
+      setUser(username);
       localStorage.setItem('user', username);
+      setErrorMsg('');
+      navigate("/home")
+
     }
   }
 
-  function handleUserNameTextChange(e) {
+  function handleUsernameChange(e) {
     setUsername(e.target.value);
   }
 
-  function handlePasswordTextChange(e) {
+  function handlePasswordChange(e) {
     setPassword(e.target.value);
   }
+
   
   return (
     <main>
         <section className="loginContainer">
             <img src="JorvoLogo.png" alt="Jorvo Logo" className="loginLogo"/>
-              <form className ="loginForm" action="/home">
-                  <input type ="text" className="username" name="username" placeholder="Username" onChange={handleUserNameTextChange} required />
-                  <input type ="password" className="password" name="password" placeholder="Password" onChange={handlePasswordTextChange} required />
+              <div className ="loginForm">
+                  <input type ="text" className="username" placeholder="Username" onChange={handleUsernameChange} required />
+                  <input type ="password" className="password" placeholder="Password" onChange={handlePasswordChange} required />
                   <button type="submit" className="loginButton" onClick={handleLogin}>Login</button>
-              </form>
+              </div>
               {errorMsg && <ErrorMessage message={errorMsg} />}
         </section>
     </main>
