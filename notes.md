@@ -41,3 +41,5 @@ This Part was probably the longest. It was nice to have the Simon app as a refer
 After this step, I feel like I understand React a lot better and am more confident in how my project works. 
 
 ## React Part 2: Reactivity
+
+- It took me a while to figure out that when you're passing a state setter or something else down to a function you need put it in brackets.
