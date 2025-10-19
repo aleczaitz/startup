@@ -9,15 +9,21 @@ export function Login({setUser}) {
   const [errorMsg, setErrorMsg] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
 
-  function handleLogin() {
+
+  async function handleLogin() {
     if (!username || !password) {
       setErrorMsg('Enter username and password');
+      return;
     } else {
+      setIsAuthenticating(true);
+      await authenticate();
       setUser(username);
       localStorage.setItem('user', username);
       setErrorMsg('');
+      setIsAuthenticating(false);
       navigate("/home")
 
     }
@@ -31,6 +37,12 @@ export function Login({setUser}) {
     setPassword(e.target.value);
   }
 
+  async function authenticate() {
+    console.log('authenticating...')
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('authentication complete');
+  }
+
   
   return (
     <main>
@@ -39,7 +51,16 @@ export function Login({setUser}) {
               <div className ="loginForm">
                   <input type ="text" className="username" placeholder="Username" onChange={handleUsernameChange} required />
                   <input type ="password" className="password" placeholder="Password" onChange={handlePasswordChange} required />
-                  <button type="submit" className="loginButton" onClick={handleLogin}>Login</button>
+                  <button type="submit" className="loginButton" onClick={handleLogin} disabled={isAuthenticating}>{
+                    isAuthenticating ? (
+                      <div className="spinner-container">
+                        Authenticating
+                         <span className="spinner"></span>
+                      </div>
+                    ) : (
+                      <div>Login</div>
+                    )
+                  }</button>
               </div>
               {errorMsg && <ErrorMessage message={errorMsg} />}
         </section>
