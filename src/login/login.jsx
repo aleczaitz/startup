@@ -19,13 +19,22 @@ export function Login({setUser}) {
       return;
     } else {
       setIsAuthenticating(true);
-      await authenticate();
-      setUser(username);
-      localStorage.setItem('user', username);
-      setErrorMsg('');
-      setIsAuthenticating(false);
-      navigate("/home")
-
+      authenticate()
+        .then((msg) => {
+          console.log(msg);
+          navigate("/home");
+          setUser(username);
+          localStorage.setItem('user', username);
+          setErrorMsg('');
+        })
+        .catch((err) => {
+          console.log(err)
+          setErrorMsg(err)
+        })
+        .finally(() => {
+          setIsAuthenticating(false);
+          console.log("login process complete")
+        });
     }
   }
 
@@ -39,8 +48,15 @@ export function Login({setUser}) {
 
   async function authenticate() {
     console.log('authenticating...')
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('authentication complete');
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() < 0.5) {
+          resolve('authentication complete');
+        } else {
+          reject('authentication failed, try again')
+        }
+      }, 2000);
+    })
   }
 
   
