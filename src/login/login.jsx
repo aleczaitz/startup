@@ -50,7 +50,7 @@ export function Login({setUser}) {
         if (Math.random() < 0.5) {
           resolve('authentication successful');
         } else {
-          reject('something went wrong, try again')
+          reject('something went wrong, try again (this is a demo error)');
         }
       }, 2000);
     })

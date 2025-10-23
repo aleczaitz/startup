@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
@@ -13,6 +13,14 @@ export default function App() {
     const [user, setUser] = useState(null);
 
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(storedUser);
+        }
+    }, []);
+
 
     return (
         <BrowserRouter>
@@ -36,10 +44,12 @@ export default function App() {
                                 <NavLink className="nav-link" to="/about">About</NavLink>
                             </li>
                         </menu>
-                        <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>☰</button>
+                        <div className='corner-container'>
+                            {user && <span>{user}</span>}
+                            <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>☰</button>
+                        </div>
                     </nav>
                 </header>
-                {user && <div>{user}</div>}
                 <nav className={`drawer ${isOpen ? 'open' : ''}`}>
                     <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>→</button>
                 </nav>

@@ -82,10 +82,6 @@ section {
   font-size: 1.25rem;
 }
 
-@media (max-width:640px) {
-  .navMenu { display: none; }
-}
-
 h2 {
   font-weight: 700;
 }
@@ -121,11 +117,13 @@ ul {
 .accentButton { background: var(--accent-color); color: var(--bg-color); }
 
 .navButton {
+  display: none;
   border: none;
   font-size: x-large;
   width: 30px;
   color: var(--primary-color);
   background-color: var(--bg-color);
+
 }
 
 .primaryButton:hover,
@@ -157,6 +155,13 @@ ul {
 
 @media (max-width:640px) {
   .listItem { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+  .navMenu { display: none; }
+  .navButton { display: block; }
+}
+
+.corner-container {
+  display: flex;
+  align-items: baseline;
 }
 
 .githubLink {
