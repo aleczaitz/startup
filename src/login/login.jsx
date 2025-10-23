@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
-import { ErrorMessage } from '../components/ErrorMessage';
+import { ErrorMessage } from '../components/errorMessage/errorMessage';
 
 export function Login({setUser}) {
   const navigate = useNavigate();

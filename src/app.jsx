@@ -6,6 +6,8 @@ import { Login } from './login/login';
 import { Home } from './home/home';
 import { Friends } from './friends/friends';
 import { About } from './about/about';
+import { Drawer } from './components/drawer/drawer';
+
 
 
 export default function App() {
@@ -44,10 +46,11 @@ export default function App() {
                                 <NavLink className="nav-link" to="/about">About</NavLink>
                             </li>
                         </menu>
-                        <div className='corner-container'>
-                            {user && <span>{user}</span>}
-                            <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>☰</button>
-                        </div>
+                        <Drawer 
+                            isOpen={isOpen}
+                            setIsOpen={setIsOpen}
+                            user={user}
+                        />
                     </nav>
                 </header>
                 <nav className={`drawer ${isOpen ? 'open' : ''}`}>
