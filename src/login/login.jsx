@@ -19,21 +19,19 @@ export function Login({setUser}) {
       return;
     } else {
       setIsAuthenticating(true);
-      authenticate()
-        .then((msg) => {
-          console.log(msg);
-          navigate("/home");
-          setUser(username);
-          localStorage.setItem('user', username);
-          setErrorMsg('');
-        })
-        .catch((err) => {
-          console.log(err)
-          setErrorMsg(err)
-        })
-        .finally(() => {
-          setIsAuthenticating(false);
-        });
+      try {
+        const msg = await authenticate();
+        console.log(msg);
+        navigate("/home");
+        setUser(username);
+        localStorage.setItem('user', username);
+        setErrorMsg('');
+      } catch (err) {
+        console.log(err);
+        setErrorMsg(err);
+      } finally {
+        setIsAuthenticating(false);
+      }
     }
   }
 
@@ -50,7 +48,7 @@ export function Login({setUser}) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (Math.random() < 0.5) {
-          resolve('authentication complete');
+          resolve('authentication successful');
         } else {
           reject('something went wrong, try again')
         }
