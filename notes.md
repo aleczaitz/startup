@@ -43,3 +43,5 @@ After this step, I feel like I understand React a lot better and am more confide
 ## React Part 2: Reactivity
 
 - It took me a while to figure out that when you're passing a state setter or something else down to a function you need put it in brackets.
+- I dug a little into why you would use an actual function definition or an arrow function, and the reason I found is that actual functions have the actual `this` keyword, making it so if you're calling the function in multiple instances, you can use that to do stuff that is unique to that instance
+- When playing around with the differences between the `.then` chaining and `aysnc / await`, I feel like I like using the chaining over the other. I feel like it makes more sense to me, but it is nice in instances where I have code that I want to wait to excecute after an await without having to throw it in `.finaly()`
