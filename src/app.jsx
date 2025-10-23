@@ -14,7 +14,7 @@ export default function App() {
 
     const [user, setUser] = useState(null);
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -46,6 +46,10 @@ export default function App() {
                                 <NavLink className="nav-link" to="/about">About</NavLink>
                             </li>
                         </menu>
+                        <div className='corner-container'>
+                            {user && <span>{user}</span>}
+                            <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>☰</button>
+                        </div>
                         <Drawer 
                             isOpen={isOpen}
                             setIsOpen={setIsOpen}
@@ -53,9 +57,6 @@ export default function App() {
                         />
                     </nav>
                 </header>
-                <nav className={`drawer ${isOpen ? 'open' : ''}`}>
-                    <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>→</button>
-                </nav>
                 <Routes>
                     <Route path='/' element={<Login setUser = {setUser}/>} exact />
                     <Route path='/home' element={<Home />} />
