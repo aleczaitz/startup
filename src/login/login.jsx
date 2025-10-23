@@ -33,7 +33,6 @@ export function Login({setUser}) {
         })
         .finally(() => {
           setIsAuthenticating(false);
-          console.log("login process complete")
         });
     }
   }
@@ -53,7 +52,7 @@ export function Login({setUser}) {
         if (Math.random() < 0.5) {
           resolve('authentication complete');
         } else {
-          reject('authentication failed, try again')
+          reject('something went wrong, try again')
         }
       }, 2000);
     })
