@@ -45,7 +45,7 @@ export function Login({setUser, user}) {
     console.log('authenticating...')
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (Math.random() < 0.3) {
+        if (Math.random() > 0.3) {
           resolve('authentication successful');
         } else {
           reject('something went wrong, try again (this is a demo error)');

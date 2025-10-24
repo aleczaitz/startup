@@ -1,0 +1,27 @@
+[
+    {
+        "friend_name": "Alice",
+        "friend_id": 1,
+        "date_added": "2024-05-01"
+    },
+    {
+        "friend_name": "Bob",
+        "friend_id": 2,
+        "date_added": "2024-05-03"
+    },
+    {
+        "friend_name": "Charlie",
+        "friend_id": 3,
+        "date_added": "2024-05-05"
+    },
+    {
+        "friend_name": "Diana",
+        "friend_id": 4,
+        "date_added": "2024-05-07"
+    },
+    {
+        "friend_name": "Ethan",
+        "friend_id": 5,
+        "date_added": "2024-05-09"
+    }
+]
