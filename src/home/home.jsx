@@ -4,10 +4,6 @@ import matchesData from '../../matches.json';
 
 export function Home({user}) {
 
-  const matches = () => {
-
-  }
-
   return (
     <main>
         <section className="matchStartSection">

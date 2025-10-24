@@ -90,16 +90,16 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [x] **Components** - I did not complete this part of the deliverable.
-- [x] **Router** - I did not complete this part of the deliverable.
+- [x] **Bundled using Vite** - 
+- [x] **Components** - 
+- [x] **Router** - 
 
 ## 🚀 React part 2: Reactivity deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - I implemented some fake data for the home page to display the data from games as soon as the db is hooked up. I also simulated an authentication system using async/await functionality and Promises. 
+- [x] **Hooks** - I used useEffect to use the setUser function from the useState hook from the localStorage. This made it so rendering the app doesn't cause an infinite loop what setting the user from local storage. 
 
 ## 🚀 Service deliverable
 
