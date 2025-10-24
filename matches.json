@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1234,
+        "player1": "Alec",
+        "player2": "Jordan",
+        "winner": "Alec",
+        "duration": "5m 32s"
+    },
+    {   
+        "id": 1235,
+        "player1": "Alec",
+        "player2": "Taylor",
+        "winner": "Taylor",
+        "duration": "3m 45s"
+    },
+    {   
+        "id": 1236,
+        "player1": "Alec",
+        "player2": "Morgan",
+        "winner": "Alec",
+        "duration": "4m 10s"
+    }
+]

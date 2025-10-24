@@ -1,7 +1,13 @@
 import React from 'react';
 import './home.css';
+import matchesData from '../../matches.json';
 
 export function Home({user}) {
+
+  const matches = () => {
+
+  }
+
   return (
     <main>
         <section className="matchStartSection">
@@ -13,14 +19,17 @@ export function Home({user}) {
             </div>
             <button className="accentButton">Start a new match</button>
         </section>
-        <section className="listSection">
+        {user && <section className="listSection">
             <h2>Past Matches</h2>
             <ul>
-                <li className="listItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
-                <li className="listItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
-                <li className="listItem">match, winner, and speed <button className="primaryButton">Rematch</button></li>
+              {matchesData.map((match) => (
+                <li className="listItem" key={match.id}>
+                  {user} vs {match.player2}  -  Winner: {user}  -  Duration: {match.duration}
+                  <button className="primaryButton">Rematch</button>
+                </li>
+              ))}
             </ul>
-        </section>
+        </section>}
     </main>
   );
 }
