@@ -32,7 +32,7 @@ export default function App() {
                         <div className="navbar-brand">
                             Jorvo
                         </div>
-                        <menu className="navMenu">
+                        {/* <menu className="navMenu">
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/">Login</NavLink>
                             </li>
@@ -45,7 +45,7 @@ export default function App() {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/about">About</NavLink>
                             </li>
-                        </menu>
+                        </menu> */}
                         <div className='corner-container'>
                             {user && <span>{user}</span>}
                             <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>☰</button>

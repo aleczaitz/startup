@@ -10,6 +10,11 @@ export function Drawer({isOpen, setIsOpen, user}) {
         setIsOpen(false);
     }, [location.pathname])
 
+    function handleSignOut() {
+        localStorage.removeItem('user');
+        window.location.href = '/';
+    }
+
     return (
         <nav className={`drawer ${isOpen ? 'open' : ''}`}>
             <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>→</button>
@@ -25,6 +30,9 @@ export function Drawer({isOpen, setIsOpen, user}) {
                     </li>
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/about">About</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <div onClick={handleSignOut}>Sign Out</div>
                     </li>
                 </menu> 
         </nav>
