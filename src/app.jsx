@@ -14,7 +14,7 @@ export default function App() {
 
     const [user, setUser] = useState(null);
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -58,8 +58,8 @@ export default function App() {
                     </nav>
                 </header>
                 <Routes>
-                    <Route path='/' element={<Login setUser = {setUser}/>} exact />
-                    <Route path='/home' element={<Home />} />
+                    <Route path='/' element={<Login setUser={setUser} user={user}/>} exact />
+                    <Route path='/home' element={<Home user={user}/>}/>
                     <Route path='/friends' element={<Friends />} />
                     <Route path='/about' element={<About />} />
                     <Route path='*' element={<NotFound />} />

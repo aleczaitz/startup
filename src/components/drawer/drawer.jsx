@@ -32,7 +32,7 @@ export function Drawer({isOpen, setIsOpen, user}) {
                         <NavLink className="nav-link" to="/about">About</NavLink>
                     </li>
                     <li className="nav-item">
-                        <div onClick={handleSignOut}>Sign Out</div>
+                        <div onClick={handleSignOut}>Sign out</div>
                     </li>
                 </menu> 
         </nav>
