@@ -26,10 +26,21 @@ The web app design will be simple yet fun with lots of personality. There will b
 
 ```mermaid
 sequenceDiagram
-    actor Player1
-    actor Player2
-    Player1->>Websocket: Players read and write real time
-    Player2->>Websocket: 
+  title Jorvo App
+
+actor Alice
+actor Bob
+
+Alice->Server:Set available
+Bob->Server:Set available
+Server-->>Bob:Alice available
+Server-->>Alice: Bob available
+Alice->Server:Start match with Bob
+Server-->>Bob:Match request notification
+Bob->Server:Accept Alice match
+Serber->Bob:Match WebHook
+Server->Alice:Match WebHook
+
 ```
 
 ### Key features
