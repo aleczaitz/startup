@@ -34,16 +34,19 @@ apiRouter.post('/auth/create', async (req, res) => {
     }
 })
 
-apiRouter.get('/auth/password/:email', async (req, res) => {
-    const email = req.params.email;
-    const user = await findUser('email', email);
-
-    if (!user) {
-        res.status(404).send({ msg: "No user found" });
-    } else {
-        res.send({ password: user.password })
+apiRouter.post('/auth/login', async (req, res) => {
+    const user = await findUser('email', req.body.email);
+    if (user) { // check if there is actually a user in the request
+        if (await bcrypt.compare(req.body.password, user.password)) { // Check is the passwords match
+            user.token = uuid.v4();
+            setAuthCookie(res, user.token);
+            res.send({ email: user.email });
+            return;
+        }
     }
-});
+    res.status(401).send({ msg: 'Unauthorized'});
+})
+
 
 // Return the application's default page if the path is unknown
 // For example, if someone refreshes the browser on a front-end route,
