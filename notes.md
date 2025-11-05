@@ -67,3 +67,5 @@ app.use(cors({
 ```
 
 - Whenever I want to ssh into the aws server instance, I can use `ssh -i <key_location> ubuntu@jorvo.link` in the terminal
+
+- Using `res.send()` immediately stops the server resquest / response cycle, meaning the server is done processing the request. `send()` will send back whatever is put in the parantheses back to the client, usually in the form of json or plain text. 
