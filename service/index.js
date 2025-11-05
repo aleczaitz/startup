@@ -67,20 +67,19 @@ const verifyAuth = async (req, res, next) => {
     }
 };
 
+
+
+// Default error handler
 app.use((err, req, res, next) => { // giving a middleware method 4 params tells express that it's an error handler
     res.status(500).send({ type: err.name, message: err.message }) // Generic server error
 });
 
 // Return the application's default page if the path is unknown
-// For example, if someone refreshes the browser on a front-end route,
-// this will return the index.html page so the front-end app can load
-// and handle the route. The url /dashboard would still show /dashboard in the browser,
-// but the back end would just return index.html for the front end to handle it.
-// If you tried navigating to an route that is unknown to the back end
-// without this, you would get a 404 error from the back end.
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
+
+
 
 // Helper functions
 
