@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const users = [];
 
 // The field that keeps the auth token on the client browser
-const authCookieName = 'token'
+const authCookieName = 'token';
 
 // JSON body parsing using built-in middleware (makes the request body available on req.body)
 app.use(express.json());
@@ -32,7 +32,7 @@ apiRouter.post('/auth/create', async (req, res) => {
         setAuthCookie(res, user.token)
         res.send({ email: user.email }) // don't need to set the status code because the default is 200
     }
-})
+});
 
 apiRouter.post('/auth/login', async (req, res) => {
     const user = await findUser('email', req.body.email);
@@ -45,8 +45,31 @@ apiRouter.post('/auth/login', async (req, res) => {
         }
     }
     res.status(401).send({ msg: 'Unauthorized'});
-})
+});
 
+apiRouter.delete('/auth/logout', async (req, res) => {
+    // Find the user by the token cookie, that way we know if the session is active
+    const user = await findUser('token', req.cookies[authCookieName]);
+    if (user) {
+        delete user.token;
+    } // get rid of the token stored in RAM
+    res.clearCookie(authCookieName);
+    res.status(204).end(); // 204 means that the request was successfull but there isn't any content to return
+});
+
+// Middleware to verify that the user is authorized to call an endpoint
+const verifyAuth = async (req, res, next) => {
+    const user = findUser('token', req.cookies[authCookieName]);
+    if (user) {
+        next(); // move on
+    } else {
+        res.status(401).send({ msg: "Unauthorized" });
+    }
+};
+
+app.use((err, req, res, next) => { // giving a middleware method 4 params tells express that it's an error handler
+    res.status(500).send({ type: err.name, message: err.message }) // Generic server error
+});
 
 // Return the application's default page if the path is unknown
 // For example, if someone refreshes the browser on a front-end route,
