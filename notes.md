@@ -45,3 +45,23 @@ After this step, I feel like I understand React a lot better and am more confide
 - It took me a while to figure out that when you're passing a state setter or something else down to a function you need put it in brackets.
 - I dug a little into why you would use an actual function definition or an arrow function, and the reason I found is that actual functions have the actual `this` keyword, making it so if you're calling the function in multiple instances, you can use that to do stuff that is unique to that instance
 - When playing around with the differences between the `.then` chaining and `aysnc / await`, I feel like I like using the chaining over the other. I feel like it makes more sense to me, but it is nice in instances where I have code that I want to wait to excecute after an await without having to throw it in `.finaly()`
+
+## Services / Backend
+
+- Remember that `require(<module>)` and `import ... from ...` are essentially the same thing, but `require` happens during runtime and `import` happens during compilation.
+
+- The `public` directory should only contain non-code files during development. Once the build process starts, it compilies all the frontend code and moves it to the public directory so the backend server can show them.
+
+- `array.find((user) => user[field] === value)`: This method parses over js objects in an array of users and returns if any of the user objects' field value matches that of the specified value. bracket notation allows for the field to be a param instead of looking for an actual field value 
+
+- putting a `_` in front of a parameter doesn't actually do anything, its mostly just there to display to other devs that the param isn't used in the actual function
+
+- in an example like this: `apiRouter.get('/scores', verifyAuth, handler)`, the the parameters are middleware functions and they execute in the order that they are called. 
+
+- Cookies are automatically sent from the client when the frontend and the backend share the same origin, which is usually the case in production (the frontend and backend will share the same domain). During development, however, the frontend methods (fetch(...)) will have to include `credentials: 'include'` and the backend will have to have this:
+```
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+```
