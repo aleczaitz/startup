@@ -65,3 +65,5 @@ app.use(cors({
   credentials: true
 }));
 ```
+
+- Whenever I want to ssh into the aws server instance, I can use `ssh -i <key_location> ubuntu@jorvo.link` in the terminal
