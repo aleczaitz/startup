@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+const apiKey = process.env.API_KEY;
 const port = process.argv.length > 2 ? process.argv[2] : 4000; // Default port is 4000, otherwise use the provided argument
 const express = require('express');
 const app = express();
@@ -67,7 +70,10 @@ const verifyAuth = async (req, res, next) => {
     }
 };
 
-
+// createMatch create a match between two users 
+apiRouter.post('/match/create', verifyAuth, (req, res) => {
+    // Creates a match with two user id's and a quote to type
+})
 
 // Default error handler
 app.use((err, req, res, next) => { // giving a middleware method 4 params tells express that it's an error handler
@@ -111,6 +117,17 @@ function setAuthCookie(res, authToken) {
         httpOnly: true, // doesn't show up in js (document.cookie)
         sameSite: 'strict', // doesn't allow cross origin attacks
     });
+}
+
+// takes in 2 user id's and returns a match object with a quote
+async function createMatch(player1Id, player2Id) {
+    const res = await fetch('https://api.api-ninjas.com/v2/randomquotes');
+    const data = await res.json();
+    const quote = data[0].quote;
+
+    const match = {player1: player1Id, player2: player2Id, quote: quote};
+
+    return match;
 }
 
 
