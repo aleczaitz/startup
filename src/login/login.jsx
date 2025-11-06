@@ -24,23 +24,28 @@ export function Login({user, setUser}) {
       setErrorMsg('UserName and Password Required');
     } else {
       setIsAuthenticating(true)
-      const response = await fetch(endpoint, {
-        method: 'post',
-        body: JSON.stringify({ email: username, password: password }),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      if (response?.status === 200) {
-        setUser(username);
-        localStorage.setItem('user', username);
-        setErrorMsg('');
-      } else {
-        setErrorMsg(`Error: ${data.msg}`)
+      try {
+        const response = await fetch(endpoint, {
+          method: 'post',
+          body: JSON.stringify({ email: username, password: password }),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+        });  
+        const data = await response.json();
+        console.log(data);
+        if (response?.status === 200) {
+          setUser(username);
+          localStorage.setItem('user', username);
+          setErrorMsg('');
+        } else {
+          setErrorMsg(`Error: ${data.msg}`);
+        }
+      } catch (err) {
+        setErrorMsg(`Error: ${err}`);
+      } finally {
+        setIsAuthenticating(false);
       }
-      setIsAuthenticating(false);
     }
   }
 
