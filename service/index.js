@@ -21,6 +21,9 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use('/api', apiRouter);
 
+// Apply auth middleware to all routes that start with /match
+apiRouter.use('/match', verifyAuth);
+
 /**
  * POST /api/match/create
  * Body: { inviterId: string, inviteeId: string }

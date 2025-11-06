@@ -17,7 +17,7 @@ const { findUser, createUser, setAuthCookie } = require('../utils/helpers');
  *  - 200: { "email": string, userId: string } – user successfully created
  *  - 409: { "msg": "Existing User" } – email already in use
  */
-apiRouter.post('/create', async (req, res) => {
+router.post('/create', async (req, res) => {
     if (await findUser('email', req.body.email)) {
         res.status(409).send({ msg: "Existing User"});
         return;
@@ -43,7 +43,7 @@ apiRouter.post('/create', async (req, res) => {
  *  - 200: { "email": string, userId: string } – login successful
  *  - 401: { "msg": "Unauthorized" } – invalid email or password
  */
-apiRouter.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     const user = await findUser('email', req.body.email);
     if (user) { // check if there is actually a user in the request
         if (await bcrypt.compare(req.body.password, user.password)) { // Check is the passwords match
@@ -65,7 +65,7 @@ apiRouter.post('/login', async (req, res) => {
  * Responses:
  *  - 204: (no content) – logout successful
  */
-apiRouter.delete('/logout', async (req, res) => {
+router.delete('/logout', async (req, res) => {
     // Find the user by the token cookie, that way we know if the session is active
     const user = await findUser('token', req.cookies[authCookieName]);
     if (user) {
@@ -75,5 +75,3 @@ apiRouter.delete('/logout', async (req, res) => {
     res.status(204).end(); // 204 means that the request was successfull but there isn't any content to return
 });
 
-// Apply auth middleware to all routes that start with /match
-apiRouter.use('/match', verifyAuth);
