@@ -12,7 +12,8 @@ import { Drawer } from './components/drawer/drawer';
 
 export default function App() {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(localStorage.getItem('user') || null);
+    const [userId, setUserId] = useState(null);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -32,20 +33,6 @@ export default function App() {
                         <div className="navbar-brand">
                             Jorvo
                         </div>
-                        {/* <menu className="navMenu">
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/">Login</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/home">Home</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/friends">Friends</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/about">About</NavLink>
-                            </li>
-                        </menu> */}
                         <div className='corner-container'>
                             {user && <span>{user}</span>}
                             <button className="navButton" onClick={()=> setIsOpen(!isOpen)}>☰</button>
@@ -58,9 +45,9 @@ export default function App() {
                     </nav>
                 </header>
                 <Routes>
-                    <Route path='/' element={<Login setUser={setUser} user={user}/>} exact />
-                    <Route path='/home' element={<Home user={user}/>}/>
-                    <Route path='/friends' element={<Friends user={user} />} />
+                    <Route path='/' element={<Login setUser={setUser} user={user} setUserId={setUserId} userId={setUserId}/>} exact />
+                    <Route path='/home' element={<Home user={user} userId={userId}/>}/>
+                    <Route path='/friends' element={<Friends user={user} userId={userId} />} />
                     <Route path='/about' element={<About />} />
                     <Route path='*' element={<NotFound />} />
                 </Routes>

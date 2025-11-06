@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './login.css';
 import { ErrorMessage } from '../components/errorMessage/errorMessage';
 
-export function Login({setUser, user}) {
+export function Login({user, setUser, userId, setUserId}) {
   const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -11,22 +11,39 @@ export function Login({setUser, user}) {
   const [password, setPassword] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  async function handleLogin() {
+  async function handleCreateUser() {
+    loginOrCreateUser(`/api/auth/create`);
+  }
+
+  async function handleLoginUser() {
+    loginOrCreateUser(`/api/auth/login`)
+  }
+
+  async function loginOrCreateUser(endpoint) {
     if (!username || !password) {
-      setErrorMsg('Enter username and password');
-      return;
+      setErrorMsg('UserName and Password Required');
     } else {
-      setIsAuthenticating(true);
+      setIsAuthenticating(true)
       try {
-        const msg = await authenticate();
-        console.log(msg);
-        navigate("/home");
-        setUser(username);
-        localStorage.setItem('user', username);
-        setErrorMsg('');
+        const response = await fetch(endpoint, {
+          method: 'post',
+          body: JSON.stringify({ email: username, password: password }),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+        });  
+        if (response?.status === 200) {
+          const data = await response.json();
+          setUser(username);
+          localStorage.setItem('user', username);
+          setUserId(data.userId);
+          localStorage.setItem('userId', data.userId);
+          setErrorMsg('');
+        } else {
+          setErrorMsg(`Error: ${data.msg}`);
+        }
       } catch (err) {
-        console.log(err);
-        setErrorMsg(err);
+        setErrorMsg(`Error: ${err}`);
       } finally {
         setIsAuthenticating(false);
       }
@@ -40,19 +57,6 @@ export function Login({setUser, user}) {
   function handlePasswordChange(e) {
     setPassword(e.target.value);
   }
-
-  async function authenticate() {
-    console.log('authenticating...')
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() > 0.3) {
-          resolve('authentication successful');
-        } else {
-          reject('something went wrong, try again (this is a demo error)');
-        }
-      }, 2000);
-    })
-  }
   
   return (
     <main>
@@ -62,7 +66,7 @@ export function Login({setUser, user}) {
               <div className ="loginForm">
                   <input type ="text" className="username" placeholder="Username" onChange={handleUsernameChange} required />
                   <input type ="password" className="password" placeholder="Password" onChange={handlePasswordChange} required />
-                  <button type="submit" className="loginButton" onClick={handleLogin} disabled={isAuthenticating}>{
+                  <button type="submit" className="loginButton" onClick={handleLoginUser} disabled={isAuthenticating}>{
                     isAuthenticating ? (
                       <div className="spinner-container">
                         Authenticating
@@ -70,6 +74,16 @@ export function Login({setUser, user}) {
                       </div>
                     ) : (
                       <div>Login</div>
+                    )
+                  }</button>
+                  <button type="submit" className="primaryButton" onClick={handleCreateUser} disabled={isAuthenticating}>{
+                    isAuthenticating ? (
+                      <div className="spinner-container">
+                        Authenticating
+                         <span className="spinner"></span>
+                      </div>
+                    ) : (
+                      <div>Create Account</div>
                     )
                   }</button>
               </div>
