@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 
+const authCookieName = 'token';
+
 // This will be kept in server RAM and be deleted once the server restarts
 const users = [];
 const friendships = [];
@@ -35,4 +37,4 @@ function setAuthCookie(res, authToken) {
     });
 }
 
-module.exports = { users, friendships, matches, findUser, createUser, setAuthCookie };
+module.exports = { users, friendships, matches, findUser, createUser, setAuthCookie, authCookieName };

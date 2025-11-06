@@ -1,4 +1,4 @@
-const { findUser } = require('./helpers');
+const { findUser, authCookieName } = require('./helpers');
 
 /**
  * Middleware: verifyAuth

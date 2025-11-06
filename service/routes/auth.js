@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const uuid = require('uuid');
-const { findUser, createUser, setAuthCookie } = require('../utils/helpers');
+const bcrypt = require('bcrypt');
+const { findUser, createUser, setAuthCookie, authCookieName } = require('../utils/helpers');
 
 /**
  * POST /api/auth/create
@@ -75,3 +76,4 @@ router.delete('/logout', async (req, res) => {
     res.status(204).end(); // 204 means that the request was successfull but there isn't any content to return
 });
 
+module.exports = router;

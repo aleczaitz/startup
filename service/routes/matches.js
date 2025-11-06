@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const uuid = require('uuid');
-const fetch = require('node-fetch');
 const { matches } = require('../utils/helpers');
-const { verifyAuth } = require('../utils/middleware');
 
 async function findMatch(field, value) {
   if (!value) return null;
@@ -11,11 +9,11 @@ async function findMatch(field, value) {
 }
 
 /**
- * POST /api/match/create
+ * POST /api/matches/create
  * Body: { inviterId: string, inviteeId: string }
  * Returns: { match: MatchObject }
  */
-router.post('/create', verifyAuth, (req, res) => {
+router.post('/create', (req, res) => {
   const match = {
     matchId: uuid.v4(),
     player1: req.body.inviterId,
@@ -28,11 +26,11 @@ router.post('/create', verifyAuth, (req, res) => {
 });
 
 /**
- * PUT /api/match/accept
+ * PUT /api/matches/accept
  * Body: { matchId: string, playerId: string }
  * Returns: { match: MatchObject }
  */
-router.put('/accept', verifyAuth, async (req, res) => {
+router.put('/accept', async (req, res) => {
   const match = await findMatch('matchId', req.body.matchId);
   if (!match) {
     res.status(404).send({ msg: 'No match found' });
