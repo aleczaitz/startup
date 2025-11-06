@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './login.css';
 import { ErrorMessage } from '../components/errorMessage/errorMessage';
 
-export function Login({user, setUser}) {
+export function Login({user, setUser, userId, setUserId}) {
   const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -33,10 +33,12 @@ export function Login({user, setUser}) {
           },
         });  
         const data = await response.json();
-        console.log(data);
+        console.log(data); // Remove?
         if (response?.status === 200) {
           setUser(username);
           localStorage.setItem('user', username);
+          setUserId(data.userId);
+          localStorage.setItem('userId', data.userId);
           setErrorMsg('');
         } else {
           setErrorMsg(`Error: ${data.msg}`);

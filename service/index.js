@@ -48,7 +48,7 @@ apiRouter.post('/auth/create', async (req, res) => {
         const user = await createUser(req.body.email, req.body.password);
 
         setAuthCookie(res, user.token)
-        res.send({ email: user.email }) // don't need to set the status code because the default is 200
+        res.send({ email: user.email, userId: user.userId }) // don't need to set the status code because the default is 200
     }
 });
 
@@ -72,7 +72,7 @@ apiRouter.post('/auth/login', async (req, res) => {
         if (await bcrypt.compare(req.body.password, user.password)) { // Check is the passwords match
             user.token = uuid.v4();
             setAuthCookie(res, user.token);
-            res.send({ email: user.email });
+            res.send({ email: user.email, userId: user.userId });
             return;
         }
     }
@@ -195,6 +195,7 @@ async function createUser(email, password) {
     const user = {
         email: email,
         password: passwordHash,
+        userId: uuid.v4(),
         token: uuid.v4(),
     };
     users.push(user);

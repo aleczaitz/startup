@@ -13,6 +13,7 @@ import { Drawer } from './components/drawer/drawer';
 export default function App() {
 
     const [user, setUser] = useState(localStorage.getItem('user') || null);
+    const [userId, setUserId] = useState(null);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -44,8 +45,8 @@ export default function App() {
                     </nav>
                 </header>
                 <Routes>
-                    <Route path='/' element={<Login setUser={setUser} user={user}/>} exact />
-                    <Route path='/home' element={<Home user={user}/>}/>
+                    <Route path='/' element={<Login setUser={setUser} user={user} setUserId={setUserId} userId={setUserId}/>} exact />
+                    <Route path='/home' element={<Home user={user} userId={userId}/>}/>
                     <Route path='/friends' element={<Friends user={user} />} />
                     <Route path='/about' element={<About />} />
                     <Route path='*' element={<NotFound />} />

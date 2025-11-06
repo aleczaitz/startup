@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './home.css';
 import matchesData from '../../matches.json';
 
-export function Home({user}) {
+export function Home({user, userId}) {
 
   const [ErrorMessage, setErrorMessage] = useState('');
 
