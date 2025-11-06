@@ -198,6 +198,22 @@ apiRouter.get('/friendships/:userId', verifyAuth, async (req, res) => {
     }
 })
 
+/**
+ * GET /api/users/:email
+ * Body: {  }
+ * Returns: { userId: string }
+ */
+apiRouter.get('/users/:email', verifyAuth, async (req, res) => {
+    const user = await findUser('email', req.params.email);
+    if (user) {
+        res.send({ userId: user.userId });
+    } else {
+        res.status(404).send({ msg: "No user by that email"});
+        return;
+    }
+}) 
+
+
 // Default error handler
 app.use((err, req, res, next) => { // giving a middleware method 4 params tells express that it's an error handler
     res.status(500).send({ type: err.name, message: err.message }) // Generic server error

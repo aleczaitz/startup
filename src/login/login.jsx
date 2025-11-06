@@ -32,9 +32,8 @@ export function Login({user, setUser, userId, setUserId}) {
             'Content-Type': 'application/json; charset=UTF-8'
           },
         });  
-        const data = await response.json();
-        console.log(data); // Remove?
         if (response?.status === 200) {
+          const data = await response.json();
           setUser(username);
           localStorage.setItem('user', username);
           setUserId(data.userId);

@@ -47,7 +47,7 @@ export default function App() {
                 <Routes>
                     <Route path='/' element={<Login setUser={setUser} user={user} setUserId={setUserId} userId={setUserId}/>} exact />
                     <Route path='/home' element={<Home user={user} userId={userId}/>}/>
-                    <Route path='/friends' element={<Friends user={user} />} />
+                    <Route path='/friends' element={<Friends user={user} userId={userId} />} />
                     <Route path='/about' element={<About />} />
                     <Route path='*' element={<NotFound />} />
                 </Routes>
