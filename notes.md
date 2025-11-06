@@ -76,3 +76,5 @@ app.use(cors({
   -	DELETE → URL usually identifies what to delete
 
 - Route handlers are just functions at the end of the day, so if the handler requires `await`, just put `async` before the arrow function
+
+- `const something = await Promise.all(arrayOfPromises)` returns a promise of promises that waits till all the promises in the array have been fulfilled.

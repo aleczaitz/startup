@@ -9,15 +9,26 @@ export function Friends({user, userId}) {
 
   useEffect(() => {
     if (user) {
-      fetchFriends();
+      // fetchFriends();
     }
   }, [user]);
 
+  // fills in the friends array with user objects that user has a friendship with
   async function fetchFriends() {
     const response = await fetch(`/api/friendships/${userId}`);
-    const data = await response.json();
-    setFriends(data);
+    const friendships = await response.json();
+
+    const friendfetches = await friendships.map(async (f) => {
+      const otherId = userId === f.initiatorId ? f.recieverId : f.initiatorId;
+      const response = await fetch(`/api/users/${otherId}`);
+      return response.json();
+    })
+
+    const friendObjects = await Promise.all(fetchFriends);
+    setFriends(friendObjects);
   }
+
+
 
   async function handleCreateFriendship(recieverId) {
     try {
@@ -37,6 +48,7 @@ export function Friends({user, userId}) {
     }
   }
 
+  // function to fetch the user's id by email
   async function fetchUserIdByEmail(email) {
     try{
         const response = await fetch(`api/users/${email}`);
@@ -72,9 +84,11 @@ export function Friends({user, userId}) {
             {user && <section className="listSection">
               <h2>Current Friends</h2>
               <ul>
+                {friends.map((f) => (
+                  <li key={f.userId} className="listItem"> {f.email} </li>
+                ))}
               </ul>
             </section>}
         </main>
   );
 }
-// todo: map out friends to friendships and display them here.

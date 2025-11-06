@@ -183,6 +183,7 @@ apiRouter.post('/friendships/create', verifyAuth, async (req, res) => {
 });
 
 /**
+ * returns a list of friendships that a userId is involved in
  * GET /api/friendships/:userId
  * Body: {  }
  * Returns: { [ {friendship}, {friendship} ... ] }
@@ -209,6 +210,21 @@ apiRouter.get('/users/:email', verifyAuth, async (req, res) => {
         res.send({ userId: user.userId });
     } else {
         res.status(404).send({ msg: "No user by that email"});
+        return;
+    }
+}) 
+
+/**
+ * GET /api/users/:userId
+ * Body: {  }
+ * Returns: { user }
+ */
+apiRouter.get('/users/:userId', verifyAuth, async (req, res) => {
+    const user = await findUser('userId', req.params.email);
+    if (user) {
+        res.send({ user });
+    } else {
+        res.status(404).send({ msg: "No user by that id"});
         return;
     }
 }) 
