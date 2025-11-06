@@ -24,52 +24,6 @@ app.use('/api', apiRouter);
 // Apply auth middleware to all routes that start with /match
 apiRouter.use('/match', verifyAuth);
 
-/**
- * POST /api/match/create
- * Body: { inviterId: string, inviteeId: string }
- * Returns: { match: MatchObject }
- */
-apiRouter.post('/match/create', (req, res) => {
-    // Creates a match with two user id's and a quote to type
-    const match = {
-        matchId: uuid.v4(),
-        player1: req.body.inviterId, 
-        player2: req.body.inviteeId,
-        quote: "",
-        status: "pending",
-    }
-    matches.push(match);
-
-    res.status(200).send({ match });
-});
-
-/**
- * PUT /api/match/accept
- * Body: { matchId: string, playerId: string }
- * Returns: { match: MatchObject }
- */
-apiRouter.put('/match/accept', async (req, res) => {
-    const match = await findMatch('id', req.body.matchId);
-    if (!match) {
-        res.status(404).send({ msg: "No match found"});
-        return;
-    } else {
-        try {
-            const response = await fetch('https://api.api-ninjas.com/v2/randomquotes', {
-                headers: { 'X-Api-Key': process.env.API_NINJAS_KEY}
-            });
-            const data = await response.json();
-            const quote = data[0].quote;
-
-            match.status = "active";
-            match.quote = quote;
-
-            res.status(200).send({ match });
-        } catch (err) {
-            res.status(500).send({ msg: err.message })
-        }
-    }
-});
 
 
 /**
