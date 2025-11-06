@@ -1,0 +1,38 @@
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
+
+// This will be kept in server RAM and be deleted once the server restarts
+const users = [];
+const friendships = [];
+const matches = [];
+
+async function findUser(field, value) {
+    if (!value) return null;
+
+    return users.find((user) => user[field] === value);
+}
+
+// create a user object and store it in the server RAM for now
+async function createUser(email, password) {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = {
+        email: email,
+        password: passwordHash,
+        userId: uuid.v4(),
+        token: uuid.v4(),
+    };
+    users.push(user);
+    return user;
+}
+
+// set the response cookie to store an auth token in the user's browser and store the token in the server RAM
+function setAuthCookie(res, authToken) {
+    res.cookie(authCookieName, authToken, {
+        maxAge: 1000 * 60 * 60, // How long the cookie lasts in the browser in ms
+        secure: true, // only sent over https?
+        httpOnly: true, // doesn't show up in js (document.cookie)
+        sameSite: 'strict', // doesn't allow cross origin attacks
+    });
+}
+
+module.exports = { users, friendships, matches, findUser, createUser, setAuthCookie };

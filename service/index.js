@@ -4,13 +4,7 @@ const apiKey = process.env.API_KEY;
 const port = process.argv.length > 2 ? process.argv[2] : 4000; // Default port is 4000, otherwise use the provided argument
 const express = require('express');
 const app = express();
-const bcrypt = require('bcrypt');
-const uuid = require('uuid');
 const cookieParser = require('cookie-parser');
-
-// This will be kept in server RAM and be deleted once the server restarts
-const users = [];
-const friendships = [];
 
 // The field that keeps the auth token on the client browser
 const authCookieName = 'token';
@@ -241,12 +235,6 @@ app.use((_req, res) => {
 
 // Helper functions
 
-async function findUser(field, value) {
-    if (!value) return null;
-
-    return users.find((user) => user[field] === value);
-}
-
 async function findMatch(field, value) {
     if (!value) return null;
 
@@ -274,30 +262,7 @@ async function createFriendship(initiatorId, receiverId) {
     return friendship;
 }
 
-async function createUser(email, password) {
-    // create a user object and store it in the server RAM for now
 
-    const passwordHash = await bcrypt.hash(password, 10);
-    const user = {
-        email: email,
-        password: passwordHash,
-        userId: uuid.v4(),
-        token: uuid.v4(),
-    };
-    users.push(user);
-    return user;
-}
-
-function setAuthCookie(res, authToken) {
-    // set the response cookie to store an auth token in the user's browser
-    // and store the token in the server RAM
-    res.cookie(authCookieName, authToken, {
-        maxAge: 1000 * 60 * 60, // How long the cookie lasts in the browser in ms
-        secure: true, // only sent over https?
-        httpOnly: true, // doesn't show up in js (document.cookie)
-        sameSite: 'strict', // doesn't allow cross origin attacks
-    });
-}
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
