@@ -93,22 +93,6 @@ apiRouter.delete('/auth/logout', async (req, res) => {
     res.status(204).end(); // 204 means that the request was successfull but there isn't any content to return
 });
 
-/**
- * Middleware: verifyAuth
- * Checks if the user making the request has a valid auth cookie.
- * 
- * If valid → calls next() to continue to the route handler.
- * If invalid → returns 401 Unauthorized.
- */
-const verifyAuth = async (req, res, next) => {
-    const user = findUser('token', req.cookies[authCookieName]);
-    if (user) {
-        next(); // move on
-    } else {
-        res.status(401).send({ msg: "Unauthorized" });
-    }
-};
-
 // Apply auth middleware to all routes that start with /match
 apiRouter.use('/match', verifyAuth);
 
