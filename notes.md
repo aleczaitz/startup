@@ -69,3 +69,10 @@ app.use(cors({
 - Whenever I want to ssh into the aws server instance, I can use `ssh -i <key_location> ubuntu@jorvo.link` in the terminal
 
 - Using `res.send()` immediately stops the server resquest / response cycle, meaning the server is done processing the request. `send()` will send back whatever is put in the parantheses back to the client, usually in the form of json or plain text. 
+
+- Rule of thumb when using data in requests:
+  -	GET → data goes in URL (no body)
+  -	POST / PUT / PATCH → data goes in body
+  -	DELETE → URL usually identifies what to delete
+
+- Route handlers are just functions at the end of the day, so if the handler requires `await`, just put `async` before the arrow function
