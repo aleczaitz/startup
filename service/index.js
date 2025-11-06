@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 // This will be kept in server RAM and be deleted once the server restarts
 const users = [];
 const matches = [];
+const friendships = [];
 
 // The field that keeps the auth token on the client browser
 const authCookieName = 'token';
@@ -38,7 +39,7 @@ app.use('/api', apiRouter);
  * }
  * 
  * Responses:
- *  - 200: { "email": string } – user successfully created
+ *  - 200: { "email": string, userId: string } – user successfully created
  *  - 409: { "msg": "Existing User" } – email already in use
  */
 apiRouter.post('/auth/create', async (req, res) => {
@@ -63,7 +64,7 @@ apiRouter.post('/auth/create', async (req, res) => {
  * }
  * 
  * Responses:
- *  - 200: { "email": string } – login successful
+ *  - 200: { "email": string, userId: string } – login successful
  *  - 401: { "msg": "Unauthorized" } – invalid email or password
  */
 apiRouter.post('/auth/login', async (req, res) => {
@@ -164,6 +165,21 @@ apiRouter.put('/match/accept', async (req, res) => {
     }
 });
 
+/**
+ * POST /api/friendships/create
+ * Body: { initiatorId: string, recieverId: string }
+ * Returns: { friendshipId: string }
+ */
+apiRouter.post('/friendships/create', verifyAuth, async (req, res) => {
+    if (await findFriendship(req.body.initiatorId, req.body.recieverId)) {
+        res.status(409).send({ msg: 'Existing friendship' })
+    } else {
+        const friendship = createFriendship(req.body.initiatorId, req.body.recieverId);
+
+        res.send({ friendshipId: friendship.id });
+    }
+});
+
 // Default error handler
 app.use((err, req, res, next) => { // giving a middleware method 4 params tells express that it's an error handler
     res.status(500).send({ type: err.name, message: err.message }) // Generic server error
@@ -186,6 +202,35 @@ async function findMatch(field, value) {
     if (!value) return null;
 
     return matches.find((m) => m[field] === value);
+}
+
+async function findFriendship(initiatorId, recieverId) {
+    if (!initiatorId || !recieverId) return null;
+
+    return friendships.find((f) => 
+        (f.initiatorId === initiatorId && f.recieverId === recieverId) ||
+        (f.initiatorId === recieverId && f.recieverId === initiatorId)
+    );
+}
+
+// {
+//     friendshipId: string,
+//     initiatorId: string,
+//     recieverId: string,
+//     createAt: Date,
+//     status: 'pending' 'accepted'
+// }
+
+async function createFriendship(initiatorId, recieverId) {
+    const friendship = {
+        friendshipId: uuid.v4(),
+        initiatorId: initiatorId,
+        recieverId: recieverId,
+        createdAt: new Date(),
+        status: "pending"
+    }
+    friendships.push(friendship);
+    return friendship;
 }
 
 async function createUser(email, password) {
