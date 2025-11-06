@@ -11,7 +11,6 @@ const cookieParser = require('cookie-parser');
 // This will be kept in server RAM and be deleted once the server restarts
 const users = [];
 const friendships = [];
-const matches = [];
 
 // The field that keeps the auth token on the client browser
 const authCookieName = 'token';
