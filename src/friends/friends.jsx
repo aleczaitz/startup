@@ -9,7 +9,7 @@ export function Friends({user, userId}) {
 
   useEffect(() => {
     if (user) {
-      // fetchFriends();
+      fetchFriends();
     }
   }, [user]);
 
@@ -85,7 +85,9 @@ export function Friends({user, userId}) {
               <h2>Current Friends</h2>
               <ul>
                 {friends.map((f) => (
-                  <li key={f.userId} className="listItem"> {f.email} </li>
+                  <li key={f.userId} className="listItem"> {f.email}
+                  <button className="primaryButton">Start Match</button>
+                  </li>
                 ))}
               </ul>
             </section>}

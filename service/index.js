@@ -10,8 +10,8 @@ const cookieParser = require('cookie-parser');
 
 // This will be kept in server RAM and be deleted once the server restarts
 const users = [];
-const matches = [];
 const friendships = [];
+const matches = [];
 
 // The field that keeps the auth token on the client browser
 const authCookieName = 'token';
@@ -127,7 +127,7 @@ apiRouter.use('/match', verifyAuth);
 apiRouter.post('/match/create', (req, res) => {
     // Creates a match with two user id's and a quote to type
     const match = {
-        id: uuid.v4(),
+        matchId: uuid.v4(),
         player1: req.body.inviterId, 
         player2: req.body.inviteeId,
         quote: "",
