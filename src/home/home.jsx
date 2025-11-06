@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './home.css';
 import matchesData from '../../matches.json';
 
 export function Home({user}) {
+
+  const [ErrorMessage, setErrorMessage] = useState('');
+
+  async function handleCreateMatch() {
+    createMatch(`/api/match/create`)
+  }
+
+  async function createMatch(endpoint) {
+    try {
+      const response = await fetch(endpoint, {
+        method: 'post',
+        body: JSON.stringify({
+          inviterId: '',
+          inviteeId: ''
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+      })
+    } catch (err) {
+      setErrorMessage(`Error: ${err}`);
+    }
+  }
 
   return (
     <main>

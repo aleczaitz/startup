@@ -118,7 +118,7 @@ const verifyAuth = async (req, res, next) => {
 apiRouter.use('/match', verifyAuth);
 
 /**
- * POST /api/match/accept
+ * POST /api/match/create
  * Body: { inviterId: string, inviteeId: string }
  * Returns: { match: MatchObject }
  */
