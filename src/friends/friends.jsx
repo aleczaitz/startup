@@ -10,7 +10,6 @@ export function Friends({user, userId}) {
 
   useEffect(() => {
     if (user && userId) {
-      console.log('fetching friends')
       fetchFriends();
     }
   }, [user, userId]);
@@ -33,7 +32,6 @@ export function Friends({user, userId}) {
 
     const friendObjects = await Promise.all(friendfetches);
     setFriends(friendObjects);
-    console.log(friendObjects);
   }
 
 
@@ -68,7 +66,6 @@ export function Friends({user, userId}) {
     try{
         console.log(email);
         const response = await fetch(`/api/users/email/${email}`);
-        console.log(response);
       if (response?.status === 200) {
         const data = await response.json();
         return data;
