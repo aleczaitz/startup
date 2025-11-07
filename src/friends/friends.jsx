@@ -8,23 +8,31 @@ export function Friends({user, userId}) {
   const [friendEmail, setFriendEmail] = useState('');
 
   useEffect(() => {
-    if (user) {
+    if (user && userId) {
+      console.log('fetching friends')
       fetchFriends();
     }
-  }, [user]);
+  }, [user, userId]);
+
+  console.log(userId); // test b96e63d6-841e-4f64-8e30-d79a21b7c61c
 
   // fills in the friends array with user objects that user has a friendship with
   async function fetchFriends() {
     const response = await fetch(`/api/friendships/${userId}`);
     const friendships = await response.json();
 
+    if (!Array.isArray(friendships)) {
+      console.error('Expected array, got:', data);
+      return;
+    }
+
     const friendfetches = await friendships.map(async (f) => {
-      const otherId = userId === f.initiatorId ? f.recieverId : f.initiatorId;
+      const otherId = userId === f.initiatorId ? f.receiverId : f.initiatorId;
       const response = await fetch(`/api/users/${otherId}`);
       return response.json();
     })
 
-    const friendObjects = await Promise.all(fetchFriends);
+    const friendObjects = await Promise.all(friendfetches);
     setFriends(friendObjects);
   }
 
@@ -84,7 +92,7 @@ export function Friends({user, userId}) {
             {user && <section className="listSection">
               <h2>Current Friends</h2>
               <ul>
-                {friends.map((f) => (
+                {friends.length > 0 && friends.map((f) => (
                   <li key={f.userId} className="listItem"> {f.email}
                   <button className="primaryButton">Start Match</button>
                   </li>

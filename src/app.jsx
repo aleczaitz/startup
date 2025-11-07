@@ -19,8 +19,10 @@ export default function App() {
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
-        if (storedUser) {
+        const storedUserId = localStorage.getItem('userId');
+        if (storedUser && storedUserId) {
             setUser(storedUser);
+            setUserId(storedUserId);
         }
     }, []);
 
