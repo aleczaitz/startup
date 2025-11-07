@@ -6,6 +6,7 @@ export function Friends({user, userId}) {
 
   const [friends, setFriends] = useState([]);
   const [friendEmail, setFriendEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (user && userId) {
@@ -14,52 +15,60 @@ export function Friends({user, userId}) {
     }
   }, [user, userId]);
 
-  console.log(userId); // test b96e63d6-841e-4f64-8e30-d79a21b7c61c
-
   // fills in the friends array with user objects that user has a friendship with
   async function fetchFriends() {
     const response = await fetch(`/api/friendships/${userId}`);
     const friendships = await response.json();
 
     if (!Array.isArray(friendships)) {
-      console.error('Expected array, got:', data);
+      console.error('Expected array, got:', friendships);
       return;
     }
 
-    const friendfetches = await friendships.map(async (f) => {
+    const friendfetches = friendships.map(async (f) => {
       const otherId = userId === f.initiatorId ? f.receiverId : f.initiatorId;
-      const response = await fetch(`/api/users/${otherId}`);
+      const response = await fetch(`/api/users/id/${otherId}`);
       return response.json();
     })
 
     const friendObjects = await Promise.all(friendfetches);
     setFriends(friendObjects);
+    console.log(friendObjects);
   }
 
 
 
-  async function handleCreateFriendship(recieverId) {
+  async function handleCreateFriendship(recieverEmail) {
     try {
+      const receiverUserObject = await fetchUserIdByEmail(recieverEmail);
+      const receiverId = receiverUserObject.userId;
+      if (!receiverUserObject) {
+        setErrorMessage("User not found.");
+        return;
+      }
       const response = await fetch(`/api/friendships/create`, {
         method: 'post',
-        body: JSON.stringify({initiatorId: userId, recieverId: recieverId}),
+        body: JSON.stringify({ initiatorId: userId, receiverId: receiverId}),
         headers: {
           "Content-Type": "application/json; charset=UTF-8"
         },
       });
       const data = await response.json();
       if (response?.status === 200) {
-        // Todo
+        fetchFriends();
       }
     } catch (err) {
+      console.log(`Error: ${err.msg}`)
       return;
     }
   }
 
-  // function to fetch the user's id by email
+  // function to fetch the user's id by email, returns a user object
   async function fetchUserIdByEmail(email) {
     try{
-        const response = await fetch(`api/users/${email}`);
+        console.log(email);
+        const response = await fetch(`/api/users/email/${email}`);
+        console.log(response);
       if (response?.status === 200) {
         const data = await response.json();
         return data;
@@ -71,8 +80,6 @@ export function Friends({user, userId}) {
     }
     
   }
-
-  
 
   return (
         <main>
@@ -86,14 +93,16 @@ export function Friends({user, userId}) {
                   value={friendEmail}
                   onChange={(e) => setFriendEmail(e.target.value)}
                 />
-                <button className="accentButton">Add Friend</button>
+                <button className="accentButton" onClick={() => handleCreateFriendship(friendEmail)}>Add Friend</button>
+                {errorMessage && <p className="errorText">{errorMessage}</p>}
             </section>
 
             {user && <section className="listSection">
               <h2>Current Friends</h2>
+              {friends.length < 1 && <h3>Get some friends bro...</h3>}
               <ul>
                 {friends.length > 0 && friends.map((f) => (
-                  <li key={f.userId} className="listItem"> {f.email}
+                  <li key={f.user.userId} className="listItem"> {f.user.email}
                   <button className="primaryButton">Start Match</button>
                   </li>
                 ))}
