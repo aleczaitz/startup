@@ -207,3 +207,10 @@ ul {
   right: 0;
 }
 
+.inputButtonSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 720px;
+}

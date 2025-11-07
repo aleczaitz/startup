@@ -19,7 +19,7 @@ export function Friends({user, userId}) {
   // fills in the friends array with user objects that user has a friendship with
   async function fetchFriends() {
     const response = await fetch(`/api/friendships/${userId}`);
-    if (response.status === 204) {
+    if (response.status === 404) {
       return;
     }
     const friendships = await response.json();
@@ -77,7 +77,7 @@ export function Friends({user, userId}) {
   async function fetchUsers() {
     try {
       const response = await fetch(`/api/users`);
-      if (response.status === 204) {
+      if (response.status === 404) {
         setErrorMessage('Looks like there are no users yet');
         return;
       }
@@ -91,7 +91,7 @@ export function Friends({user, userId}) {
 
   return (
         <main>
-            <section className="addFriendSection">
+            <section className="inputButtonSection">
                 <h2>Friends</h2>
                 {!user && <h3>Please log in to view and manage your friends.</h3>}
                 <input 

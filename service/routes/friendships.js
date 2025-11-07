@@ -52,7 +52,7 @@ router.post('/create', verifyAuth, async (req, res) => {
 router.get('/:userId', verifyAuth, async (req, res) => {
   const userId = req.params.userId;
   if (!await findUser('userId', userId)) {
-    res.status(204).send({ msg: 'No user by that id' });
+    res.status(404).send({ msg: 'No user by that id' });
     return;
   }
   const userFriendships = friendships.filter(

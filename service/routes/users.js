@@ -32,7 +32,7 @@ router.get('/id/:userId', verifyAuth, async (req, res) => {
  */
 router.get('/', verifyAuth, async (req, res) => {
   if (users.length < 1) {
-    res.status(204).send(users);
+    res.status(404).send(users);
   }
   res.send(users);
 });
