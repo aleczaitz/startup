@@ -6,13 +6,9 @@ export function Home({user, userId}) {
 
   const [ErrorMessage, setErrorMessage] = useState('');
 
-  async function handleCreateMatch(inviteeId) {
-    createMatch(`/api/match/create`, inviteeId)
-  }
-
-  async function createMatch(endpoint, inviteeId) {
+  async function createMatch(inviteeId) {
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(`/api/match/create`, {
         method: 'post',
         body: JSON.stringify({
           inviterId: userId,
@@ -27,6 +23,7 @@ export function Home({user, userId}) {
     }
   }
 
+   
   return (
     <main>
         <section className="matchStartSection">

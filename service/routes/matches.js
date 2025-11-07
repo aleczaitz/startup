@@ -16,8 +16,8 @@ async function findMatch(field, value) {
 router.post('/create', (req, res) => {
   const match = {
     matchId: uuid.v4(),
-    player1: req.body.inviterId,
-    player2: req.body.inviteeId,
+    player1Id: req.body.inviterId,
+    player2Id: req.body.inviteeId,
     quote: '',
     status: 'pending',
   };
@@ -49,5 +49,19 @@ router.put('/accept', async (req, res) => {
     res.status(500).send({ msg: err.message });
   }
 });
+
+router.get('/userId/:userId', async(req, res) => {
+  const userId = req.params.userId;
+  if (userId) {
+    const userMatches = matches.filter((m) => userId === m.player1Id || userId === m.player2Id);
+    if (userMatches.length > 0) {
+      res.send(userMatches);
+    } else {
+      res.status(404).send({ msg: "No matches for this userId" })
+    }
+  } else {
+    res.status(400).send({ msg: "Request must include a userId" })
+  }
+})
 
 module.exports = router;

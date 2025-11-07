@@ -24,8 +24,8 @@ Match
 ```
 {
     matchId: string
-    player1: string
-    player2: string
+    player1Id: string
+    player2Id: string
     quote: string
     status: "pending" : "in progress" : "complete"
 }
