@@ -96,14 +96,6 @@ export function Home({user, userId}) {
         </section>
         {user && <section className="listSection">
             <h2>Matches</h2>
-            {/* <ul>
-              {matchesData.map((match) => (
-                <li className="listItem" key={match.id}>
-                  {user} vs {match.player2}  -  Winner: {user}  -  Duration: {match.duration}
-                  <button className="primaryButton">Rematch</button>
-                </li>
-              ))}
-            </ul> */}
             <ul>
               {matches.map((m) => {
                 const opponentId = (userId === m.player1Id ? m.player2Id : m.player1Id);
@@ -118,7 +110,7 @@ export function Home({user, userId}) {
                       <button className='accentButton' onClick={() => acceptMatch(m.matchId)}>Accept match invite</button>
                     )}
                     {m.status === 'in progress' && (
-                      <button onClick={() => finishMatch()}>Finish match</button>
+                      <button className='accentButton' onClick={() => finishMatch()}>Finish match</button>
                     )}
                     {m.status === 'complete' && (
                       <button className='primaryButton' onClick={() => createMatch(opponentEmail)}>Rematch</button>
