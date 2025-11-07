@@ -23,4 +23,32 @@
 
 @media (max-width: 640px) {
   button { width: 100%; }
+  .matchListItem { flex-direction: column;}
+}
+
+.matchListItem {
+  background: white;
+  padding: 0.6rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  font-size: 1.25rem;
+  font-weight: 400;
+  
+}
+
+.leftHalfContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.rightHalfContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  gap: 8px;
 }

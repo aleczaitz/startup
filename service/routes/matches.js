@@ -31,6 +31,7 @@ router.post('/create', async (req, res) => {
     player2Id: inviteeId,
     quote: '',
     status: 'pending',
+    createdAt: new Date()
   };
   matches.push(match);
   res.status(200).send({ match });

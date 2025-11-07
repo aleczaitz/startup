@@ -102,19 +102,23 @@ export function Home({user, userId}) {
                 const opponentEmail = (m.player1Id === opponentId ? m.player1Email : m.player2Email);
 
                 return (
-                  <li key={m.matchId} className='listItem'>
-                    {opponentEmail} 
-                    {m.quote && (<span>{m.quote}</span>)}
-                    <button className='primaryButton'>{m.status}</button>
-                    {m.status === 'pending' && m.player1Id !== userId && (
-                      <button className='accentButton' onClick={() => acceptMatch(m.matchId)}>Accept match invite</button>
-                    )}
-                    {m.status === 'in progress' && (
-                      <button className='accentButton' onClick={() => finishMatch()}>Finish match</button>
-                    )}
-                    {m.status === 'complete' && (
-                      <button className='primaryButton' onClick={() => createMatch(opponentEmail)}>Rematch</button>
-                    )}
+                  <li key={m.matchId} className='matchListItem'>
+                    <div className='leftHalfContainer'>
+                      <h3>{opponentEmail} - {m.createdAt}</h3>
+                      {m.quote && (<span>{m.quote}</span>)}
+                    </div>
+                    <div className='rightHalfContainer'>
+                      <button className='primaryButton'>{m.status}</button>
+                      {m.status === 'pending' && m.player1Id !== userId && (
+                        <button className='accentButton' onClick={() => acceptMatch(m.matchId)}>Accept match invite</button>
+                      )}
+                      {m.status === 'in progress' && (
+                        <button className='accentButton' onClick={() => finishMatch()}>Finish match</button>
+                      )}
+                      {m.status === 'complete' && (
+                        <button className='primaryButton' onClick={() => createMatch(opponentEmail)}>Rematch</button>
+                      )}
+                    </div>
                   </li>
                 )
               })}
