@@ -7,11 +7,13 @@ export function Friends({user, userId}) {
   const [friends, setFriends] = useState([]);
   const [friendEmail, setFriendEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     if (user && userId) {
       fetchFriends();
     }
+    fetchUsers();
   }, [user, userId]);
 
   // fills in the friends array with user objects that user has a friendship with
@@ -33,8 +35,6 @@ export function Friends({user, userId}) {
     const friendObjects = await Promise.all(friendfetches);
     setFriends(friendObjects);
   }
-
-
 
   async function handleCreateFriendship(recieverEmail) {
     try {
@@ -74,8 +74,19 @@ export function Friends({user, userId}) {
       }
     } catch (err) {
       console.log(`Error: ${err.msg}`)
+    }  
+  }
+
+  async function fetchUsers() {
+    try {
+      const response = await fetch(`/api/users`);
+      const data = await response.json();
+      console.log(data);
+      setUsers(data);
+    } catch (err) {
+      setErrorMessage( `Error: ${err}` );
+      return;
     }
-    
   }
 
   return (
@@ -105,6 +116,17 @@ export function Friends({user, userId}) {
                 ))}
               </ul>
             </section>}
+            <section className="listSection">
+              <h2>All Users</h2>
+              <ul>
+              {users.length > 0 && users.map((u) => (
+                <li key={u.userId} className="listItem">
+                  {u.email}
+                  <button className="primaryButton" onClick={() => handleCreateFriendship(u.email)}>Add Friend</button>
+                </li>
+              ))}
+              </ul>
+            </section>
         </main>
   );
 }
