@@ -19,12 +19,10 @@ export function Friends({user, userId}) {
   // fills in the friends array with user objects that user has a friendship with
   async function fetchFriends() {
     const response = await fetch(`/api/friendships/${userId}`);
-    const friendships = await response.json();
-
-    if (!Array.isArray(friendships)) {
-      console.error('Expected array, got:', friendships);
+    if (response.status === 204) {
       return;
     }
+    const friendships = await response.json();
 
     const friendfetches = friendships.map(async (f) => {
       const otherId = userId === f.initiatorId ? f.receiverId : f.initiatorId;
@@ -64,7 +62,6 @@ export function Friends({user, userId}) {
   // function to fetch the user's id by email, returns a user object
   async function fetchUserIdByEmail(email) {
     try{
-        console.log(email);
         const response = await fetch(`/api/users/email/${email}`);
       if (response?.status === 200) {
         const data = await response.json();
@@ -80,8 +77,11 @@ export function Friends({user, userId}) {
   async function fetchUsers() {
     try {
       const response = await fetch(`/api/users`);
-      const data = await response.json();
-      console.log(data);
+      if (response.status === 204) {
+        setErrorMessage('Looks like there are no users yet');
+        return;
+      }
+      const data = await response.json();;
       setUsers(data);
     } catch (err) {
       setErrorMessage( `Error: ${err}` );
@@ -119,12 +119,12 @@ export function Friends({user, userId}) {
             <section className="listSection">
               <h2>All Users</h2>
               <ul>
-              {users.length > 0 && users.map((u) => (
+              {users.length > 0 ? users.map((u) => (
                 <li key={u.userId} className="listItem">
                   {u.email}
                   <button className="primaryButton" onClick={() => handleCreateFriendship(u.email)}>Add Friend</button>
                 </li>
-              ))}
+              )) : <h3>No users yet... </h3>}
               </ul>
             </section>
         </main>
