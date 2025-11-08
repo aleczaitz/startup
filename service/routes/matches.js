@@ -73,6 +73,29 @@ router.put('/accept', async (req, res) => {
 });
 
 /**
+ * PUT /api/matches/accept
+ * Body: { matchId: string , userId: string }
+ * Returns: { match: MatchObject }
+ */
+router.put('/complete', async (req, res) => {
+  const match = await findMatch('matchId', req.body.matchId);
+
+  if (!match) return res.status(404).send({ msg: 'match not found with that id'});
+
+  if (match.status !== 'in progress') return res.status(400).send({ msg: 'match must be in progress to complete'});
+
+  const user = await findUser('userId', req.body.userId);
+
+  if (!user) return res.status(404).send({ msg: 'user not found with that id'});
+
+  if (user.userId !== match.player1Id && user.userId !== match.player2Id) return res.status(400).send({ msg: "user must be a part of the match"});
+
+  match.status = 'complete';
+
+  res.send({ match });
+})
+
+/**
  * GET /api/matches/userId/:userId
  * Body: {  }
  * Returns: { [{match}, match] }
@@ -83,8 +106,6 @@ router.get('/userId/:userId', async(req, res) => {
   if (!userId) return res.status(400).send({ msg: "Request must include a userId" });
   
   const userMatches = matches.filter((m) => userId === m.player1Id || userId === m.player2Id);
-
-  if (userMatches.length === 0) return res.status(404).send({ msg: "No matches for this userId" });
   
   const enriched = userMatches.map((m) => {
     const player1 = users.find((u) => u.userId === m.player1Id);
@@ -93,8 +114,6 @@ router.get('/userId/:userId', async(req, res) => {
   });
 
   res.send(enriched);
-
-
 })
 
 module.exports = router;

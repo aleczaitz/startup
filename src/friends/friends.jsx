@@ -50,6 +50,8 @@ export function Friends({user, userId}) {
         },
       });
       const data = await response.json();
+      console.log(data);
+
       if (response?.status === 200) {
         fetchFriends();
       }
@@ -117,14 +119,14 @@ export function Friends({user, userId}) {
               </ul>
             </section>}
             <section className="listSection">
-              <h2>All Users</h2>
+              <h2>Other Users</h2>
               <ul>
-              {users.length > 0 ? users.map((u) => (
+              {users.length > 1 ? users.filter((u) => u.userId !== userId && !friends.some((f) => f.user.userId === u.userId) ).map((u) => (
                 <li key={u.userId} className="listItem">
                   {u.email}
                   <button className="primaryButton" onClick={() => handleCreateFriendship(u.email)}>Add Friend</button>
                 </li>
-              )) : <h3>No users yet... </h3>}
+              )) : <h3>No other users yet... </h3>}
               </ul>
             </section>
         </main>

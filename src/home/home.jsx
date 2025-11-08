@@ -14,20 +14,18 @@ export function Home({user, userId}) {
     }
   }, [user, userId])
 
-  async function fetchMatches(userId) {
+  async function fetchMatches() {
     try {
-      console.log(`fetching matches for ${userId}`);
-
       const response = await fetch(`/api/matches/userId/${userId}`);
       const data = await response.json();
 
-      console.log(data);
-
-      if (response.ok) {
-        setMatches(data);
-      } else {
+      if (!response.ok) {
         setErrorMessage(data.msg);
+        return;
       }
+
+      setMatches(data);
+
     } catch (err) {
       setErrorMessage(`Error: ${err.message}`)
       return;
@@ -50,6 +48,8 @@ export function Home({user, userId}) {
       const data = await response.json();
       console.log(data)
 
+      if (response.ok) fetchMatches();
+
     } catch (err) {
       setErrorMessage(`Error: ${err}`);
     }
@@ -64,7 +64,7 @@ export function Home({user, userId}) {
       })
 
       if (response.ok) {
-        await fetchMatches(userId);
+        await fetchMatches();
       } else {
         const data = await response.json();
         setErrorMessage(`Error: ${data.msg}`)
@@ -75,8 +75,25 @@ export function Home({user, userId}) {
     }
   } 
 
-  async function finishMatch() {
-    return;
+  async function finishMatch(matchId) {
+    try {
+      const response = await fetch(`/api/matches/complete`, {
+        method: 'put',
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: JSON.stringify({ matchId: matchId, userId: userId })
+      })
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+        fetchMatches();
+      } else {
+        console.log(data.msg)
+      }
+
+    } catch (err) {
+      setErrorMessage(`Error: ${err.message}`)
+    }
   }
 
    
@@ -104,16 +121,16 @@ export function Home({user, userId}) {
                 return (
                   <li key={m.matchId} className='matchListItem'>
                     <div className='leftHalfContainer'>
-                      <h3>{opponentEmail} - {m.createdAt}</h3>
+                      <h3>{opponentEmail}<span className='dateLabel'>{new Date(m.createdAt).toLocaleString()}</span></h3>
                       {m.quote && (<span>{m.quote}</span>)}
                     </div>
                     <div className='rightHalfContainer'>
-                      <button className='primaryButton'>{m.status}</button>
+                      <div className="statusTag">status: {m.status}</div>
                       {m.status === 'pending' && m.player1Id !== userId && (
-                        <button className='accentButton' onClick={() => acceptMatch(m.matchId)}>Accept match invite</button>
+                        <button className='accentButton' onClick={() => acceptMatch(m.matchId)}>accept invite</button>
                       )}
                       {m.status === 'in progress' && (
-                        <button className='accentButton' onClick={() => finishMatch()}>Finish match</button>
+                        <button className='accentButton' onClick={() => finishMatch(m.matchId)}>Finish match</button>
                       )}
                       {m.status === 'complete' && (
                         <button className='primaryButton' onClick={() => createMatch(opponentEmail)}>Rematch</button>

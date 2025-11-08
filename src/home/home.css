@@ -52,3 +52,16 @@
   justify-content: center;
   gap: 8px;
 }
+
+.statusTag {
+  display: flex;
+  justify-content: center;
+  color: grey;
+  font-size: small;
+}
+
+.dateLabel {
+  font-size: small;
+  display: inline;
+  margin-left: 16px;
+}
