@@ -44,6 +44,7 @@ export default function App() {
                             setIsOpen={setIsOpen}
                             user={user}
                         />
+                        <div className={`overlay ${isOpen ? '' : 'hidden'}`} onClick={() => setIsOpen(false)}></div>
                     </nav>
                 </header>
                 <Routes>
