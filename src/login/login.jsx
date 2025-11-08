@@ -43,7 +43,7 @@ export function Login({user, setUser, userId, setUserId}) {
           setErrorMsg(`Error: ${data.msg}`);
         }
       } catch (err) {
-        setErrorMsg(`Error: ${err}`);
+        setErrorMsg(`Error: ${err.message}`);
       } finally {
         setIsAuthenticating(false);
       }
