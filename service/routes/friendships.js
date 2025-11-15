@@ -19,7 +19,7 @@ async function createFriendship(initiatorId, receiverId) {
     createdAt: new Date(),
     status: 'pending',
   };
-  friendships.push(friendship);
+  DB.createFriendship(friendship);
   return friendship;
 }
 
@@ -52,9 +52,7 @@ router.get('/:userId', verifyAuth, async (req, res) => {
     res.status(404).send({ msg: 'No user by that id' });
     return;
   }
-  const userFriendships = friendships.filter(
-    (f) => f.initiatorId === userId || f.receiverId === userId
-  );
+  const userFriendships = DB.getFriendshipsByUserId(userId);
   res.send(userFriendships);
 });
 
