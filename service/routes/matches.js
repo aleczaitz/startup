@@ -67,6 +67,7 @@ router.put('/accept', async (req, res) => {
     const data = await response.json();
     match.status = 'in progress';
     match.quote = data[0].quote;
+    DB.updateMatch(match);
     res.status(200).send({ match });
   } catch (err) {
     res.status(500).send({ msg: err.message });
@@ -92,6 +93,8 @@ router.put('/complete', async (req, res) => {
   if (user.userId !== match.player1Id && user.userId !== match.player2Id) return res.status(400).send({ msg: "user must be a part of the match"});
 
   match.status = 'complete';
+
+  DB.updateMatch(match);
 
   res.send({ match });
 })
