@@ -62,6 +62,14 @@ function getFriendshipsByUserId(userId) {
   return cursor.toArray();
 }
 
+function getFriendshipByBothIds(id1, id2) {
+  const query = { $or: [
+    {$and: [ { initiatorId: id1 }, { receiverId: id2 }]},
+    {$and: [ { initiatorId: id2 }, { receiverId: id1 }]}
+  ]};
+  return friendshipCollection.findOne(query);
+}
+
 // Matches
 function getMatchById(matchId) {
   return matchCollection.findOne({ matchId: matchId });
@@ -93,6 +101,7 @@ module.exports = {
   getFriendshipById,
   createFriendship,
   getFriendshipsByUserId,
+  getFriendshipByBothIds,
   getMatchById,
   createMatch,
   getMatchesByUserId,

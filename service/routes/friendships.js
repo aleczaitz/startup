@@ -1,17 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const uuid = require('uuid');
-const { friendships, findUser } = require('../utils/helpers');
+const { findUser } = require('../utils/helpers');
 const { verifyAuth } = require('../utils/middleware');
+const DB = require('../database.js')
 
 // Temporary in-memory helper (if not already moved to helpers)
 async function findFriendship(initiatorId, receiverId) {
   if (!initiatorId || !receiverId) return null;
-  return friendships.find(
-    (f) =>
-      (f.initiatorId === initiatorId && f.receiverId === receiverId) ||
-      (f.initiatorId === receiverId && f.receiverId === initiatorId)
-  );
+  DB.getFriendshipByBothIds(initiatorId, receiverId);
 }
 
 async function createFriendship(initiatorId, receiverId) {
