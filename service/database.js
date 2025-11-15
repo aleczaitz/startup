@@ -32,8 +32,16 @@ function getUserById(email) {
   return userCollection.findOne({ id: id });
 }
 
+function getUserByToken(token) {
+  return userCollection.findOne({ token: token });
+}
+
 async function createUser(user) {
   await userCollection.insertOne(user);
+}
+
+async function updateUser(user) {
+  await userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
 // Friendships
@@ -79,6 +87,8 @@ async function updateMatch(match) {
 module.exports = {
   getUserByEmail,
   getUserById,
+  getUserByToken,
+  updateUser,
   createUser,
   getFriendshipById,
   createFriendship,

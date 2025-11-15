@@ -4,14 +4,20 @@ const uuid = require('uuid');
 const authCookieName = 'token';
 
 // This will be kept in server RAM and be deleted once the server restarts
-const users = [];
-const friendships = [];
-const matches = [];
+// const users = [];
+// const friendships = [];
+// const matches = [];
+
+const DB = require('../database.js');
+
 
 async function findUser(field, value) {
-    if (!value) return null;
+  if (!value) return null;
 
-    return users.find((user) => user[field] === value);
+  if (field === 'token') {
+    return DB.getUserByToken(value);
+  }
+  return DB.getUserByEmail(value);
 }
 
 // create a user object and store it in the server RAM for now
@@ -23,7 +29,7 @@ async function createUser(email, password) {
         userId: uuid.v4(),
         token: uuid.v4(),
     };
-    users.push(user);
+    DB.createUser(user);
     return user;
 }
 

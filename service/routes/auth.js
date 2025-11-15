@@ -3,6 +3,7 @@ const router = express.Router();
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const { findUser, createUser, setAuthCookie, authCookieName } = require('../utils/helpers');
+const DB = require('../database.js')
 
 /**
  * POST /api/auth/create
@@ -71,6 +72,7 @@ router.delete('/logout', async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
     if (user) {
         delete user.token;
+        DB.updateUser(user);
     } // get rid of the token stored in RAM
     res.clearCookie(authCookieName);
     res.status(204).end(); // 204 means that the request was successfull but there isn't any content to return
