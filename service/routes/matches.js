@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const uuid = require('uuid');
-const { matches, users, findUser } = require('../utils/helpers');
+const { findUser } = require('../utils/helpers');
+const DB = require('../database.js');
 
-async function findMatch(field, value) {
-  if (!value) return null;
-  return matches.find((m) => m[field] === value);
+async function findMatchById(matchId) {
+  if (!matchId) return null;
+  return DB.getMatchById(matchId);
 }
 
 /**
@@ -33,7 +34,7 @@ router.post('/create', async (req, res) => {
     status: 'pending',
     createdAt: new Date()
   };
-  matches.push(match);
+  await DB.createMatch(match);
   res.status(200).send({ match });
 });
 
@@ -43,7 +44,7 @@ router.post('/create', async (req, res) => {
  * Returns: { match: MatchObject }
  */
 router.put('/accept', async (req, res) => {
-  const match = await findMatch('matchId', req.body.matchId);
+  const match = await findMatchById(req.body.matchId);
   const accepterId = req.body.accepterId;
 
   if (!match) {
@@ -78,7 +79,7 @@ router.put('/accept', async (req, res) => {
  * Returns: { match: MatchObject }
  */
 router.put('/complete', async (req, res) => {
-  const match = await findMatch('matchId', req.body.matchId);
+  const match = await findMatchById(req.body.matchId);
 
   if (!match) return res.status(404).send({ msg: 'match not found with that id'});
 
@@ -105,11 +106,11 @@ router.get('/userId/:userId', async(req, res) => {
 
   if (!userId) return res.status(400).send({ msg: "Request must include a userId" });
   
-  const userMatches = matches.filter((m) => userId === m.player1Id || userId === m.player2Id);
+  const userMatches = DB.getMatchesByUserId(userId);
   
   const enriched = userMatches.map((m) => {
-    const player1 = users.find((u) => u.userId === m.player1Id);
-    const player2 = users.find((u) => u.userId === m.player2Id);
+    const player1 = DB.getUserById(m.player1Id);
+    const player2 = DB.getUserById(m.player2Id);
     return { ...m, player1Email: player1.email, player2Email: player2.email }
   });
 
