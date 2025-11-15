@@ -43,4 +43,4 @@ function setAuthCookie(res, authToken) {
     });
 }
 
-module.exports = { users, friendships, matches, findUser, createUser, setAuthCookie, authCookieName };
+module.exports = { findUser, createUser, setAuthCookie, authCookieName };
