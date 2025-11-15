@@ -32,11 +32,13 @@ router.get('/id/:userId', verifyAuth, async (req, res) => {
  * Returns: { [{user}, {user}] }
  */
 router.get('/', verifyAuth, async (req, res) => {
-  const users = await DB.getUsers();
-  if (users.length < 1) {
-    return res.status(404).send([]);
+  try {
+    const users = await DB.getUsers();       // should be an array
+    return res.status(200).send(users || []); // always send an array
+  } catch (err) {
+    console.error('Error getting users:', err);
+    return res.status(500).send({ msg: 'Error getting users' });
   }
-  res.send(users);
 });
 
 module.exports = router;

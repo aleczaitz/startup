@@ -78,16 +78,24 @@ export function Friends({user, userId}) {
 
   async function fetchUsers() {
     try {
-      const response = await fetch(`/api/users`);
-      if (response.status === 404) {
-        setErrorMessage('Looks like there are no users yet');
-        return;
+      const response = await fetch('/api/users');
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          // depending on how you design the API, but if we fix backend, this won't happen
+          setErrorMessage('Looks like there are no users yet');
+          setUsers([]); // keep users as an array
+          return;
+        }
+
+        throw new Error(`Request failed with status ${response.status}`);
       }
-      const data = await response.json();;
-      setUsers(data);
+
+      const data = await response.json();
+      setUsers(Array.isArray(data) ? data : []); // defensive
     } catch (err) {
-      setErrorMessage( `Error: ${err}` );
-      return;
+      console.error(err);
+      setErrorMessage(`Error: ${err.message ?? err}`);
     }
   }
 
@@ -111,8 +119,8 @@ export function Friends({user, userId}) {
               <h2>Current Friends</h2>
               {friends.length < 1 && <h3>Get some friends bro...</h3>}
               <ul>
-                {friends.length > 0 && friends.map((f) => (
-                  <li key={f.user.userId} className="listItem"> {f.user.email}
+                {friends.length > 0 && friends.map((u) => (
+                  <li key={u.userId} className="listItem"> {u.email}
                   <button className="primaryButton">Start Match</button>
                   </li>
                 ))}

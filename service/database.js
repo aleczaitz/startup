@@ -25,7 +25,7 @@ const matchCollection = db.collection('match');
 
 // Users
 function getUsers() {
-  return userCollection.find({}).toArray;
+  return userCollection.find({}).toArray();
 }
 
 function getUserByEmail(email) {
