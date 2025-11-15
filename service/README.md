@@ -13,7 +13,7 @@ User
 Friendship
 ```
 {
-    freindshipId: string
+    friendshipId: string
     initiatorId: string
     receiverId: string
     createdAt: Date

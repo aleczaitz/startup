@@ -37,6 +37,10 @@ async function createUser(user) {
 }
 
 // Friendships
+function getFriendshipById(friendshipId) {
+  return friendshipCollection({ friendshipId: friendshipId });
+}
+
 async function createFriendship(friendship) {
   await friendshipCollection.insertOne(friendship);
 }
@@ -51,6 +55,10 @@ function getFriendshipsByUserId(userId) {
 }
 
 // Matches
+function getMatchById(matchId) {
+  return matchCollection.findOne({ matchId: matchId });
+}
+
 async function createMatch(match) {
   matchCollection.insertOne(match);
 }
@@ -64,3 +72,19 @@ function getMatchesByUserId(userId) {
   return cursor.toArray();
 }
 
+async function updateMatch(match) {
+  await matchCollection.updateOne({ matchId: match.matchId }, { $set: match})
+}
+
+module.exports = {
+  getUserByEmail,
+  getUserById,
+  createUser,
+  getFriendshipById,
+  createFriendship,
+  getFriendshipsByUserId,
+  getMatchById,
+  createMatch,
+  getMatchesByUserId,
+  updateMatch
+}
