@@ -9,7 +9,7 @@ const db = client.db('jorvo');
 
 const userCollection = db.collection('user');
 const friendshipCollection = db.collection('friendship');
-
+const matchCollection = db.collection('match');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -22,6 +22,8 @@ const friendshipCollection = db.collection('friendship');
   }
 });
 
+
+// Users
 function getUserByEmail(email) {
   return userCollection.findOne({ email: email });
 }
@@ -34,6 +36,31 @@ async function createUser(user) {
   await userCollection.insertOne(user);
 }
 
+// Friendships
 async function createFriendship(friendship) {
   await friendshipCollection.insertOne(friendship);
 }
+
+function getFriendshipsByUserId(userId) {
+  const query = { $or: [
+    { initiatorId: userId },
+    { receiverId: userId }
+  ]};
+  const cursor = friendshipCollection.find(query);
+  return cursor.toArray();
+}
+
+// Matches
+async function createMatch(match) {
+  matchCollection.insertOne(match);
+}
+
+function getMatchesByUserId(userId) {
+  const query = { $or: [
+    { player1Id: userId },
+    { player2Id: userId }
+  ]};
+  const cursor = matchCollection.find(query);
+  return cursor.toArray();
+}
+
