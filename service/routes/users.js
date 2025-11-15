@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { findUser, users } = require('../utils/helpers');
+const { findUser } = require('../utils/helpers');
 const { verifyAuth } = require('../utils/middleware');
+const DB = require('../database.js');
 
 /**
  * GET /api/users/:email
@@ -31,8 +32,9 @@ router.get('/id/:userId', verifyAuth, async (req, res) => {
  * Returns: { [{user}, {user}] }
  */
 router.get('/', verifyAuth, async (req, res) => {
+  const users = await DB.getUsers();
   if (users.length < 1) {
-    res.status(404).send(users);
+    return res.status(404).send([]);
   }
   res.send(users);
 });

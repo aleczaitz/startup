@@ -8,7 +8,7 @@ const DB = require('../database.js')
 // Temporary in-memory helper (if not already moved to helpers)
 async function findFriendship(initiatorId, receiverId) {
   if (!initiatorId || !receiverId) return null;
-  DB.getFriendshipByBothIds(initiatorId, receiverId);
+  return await DB.getFriendshipByBothIds(initiatorId, receiverId);
 }
 
 async function createFriendship(initiatorId, receiverId) {
@@ -19,7 +19,7 @@ async function createFriendship(initiatorId, receiverId) {
     createdAt: new Date(),
     status: 'pending',
   };
-  DB.createFriendship(friendship);
+  await DB.createFriendship(friendship);
   return friendship;
 }
 
@@ -52,7 +52,7 @@ router.get('/:userId', verifyAuth, async (req, res) => {
     res.status(404).send({ msg: 'No user by that id' });
     return;
   }
-  const userFriendships = DB.getFriendshipsByUserId(userId);
+  const userFriendships = await DB.getFriendshipsByUserId(userId);
   res.send(userFriendships);
 });
 

@@ -20,16 +20,20 @@ const matchCollection = db.collection('match');
     console.log(`Unable to connect to database with ${url} because ${ex.message}`);
     process.exit(1);
   }
-});
+})();
 
 
 // Users
+function getUsers() {
+  return userCollection.find({}).toArray;
+}
+
 function getUserByEmail(email) {
   return userCollection.findOne({ email: email });
 }
 
-function getUserById(email) {
-  return userCollection.findOne({ id: id });
+function getUserById(userId) {
+  return userCollection.findOne({ userId: userId });
 }
 
 function getUserByToken(token) {
@@ -46,7 +50,7 @@ async function updateUser(user) {
 
 // Friendships
 function getFriendshipById(friendshipId) {
-  return friendshipCollection({ friendshipId: friendshipId });
+  return friendshipCollection.findOne({ friendshipId: friendshipId });
 }
 
 async function createFriendship(friendship) {
@@ -76,7 +80,7 @@ function getMatchById(matchId) {
 }
 
 async function createMatch(match) {
-  matchCollection.insertOne(match);
+  await matchCollection.insertOne(match);
 }
 
 function getMatchesByUserId(userId) {
@@ -93,6 +97,7 @@ async function updateMatch(match) {
 }
 
 module.exports = {
+  getUsers,
   getUserByEmail,
   getUserById,
   getUserByToken,

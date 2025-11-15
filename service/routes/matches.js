@@ -6,7 +6,7 @@ const DB = require('../database.js');
 
 async function findMatchById(matchId) {
   if (!matchId) return null;
-  return DB.getMatchById(matchId);
+  return await DB.getMatchById(matchId);
 }
 
 /**
@@ -67,7 +67,7 @@ router.put('/accept', async (req, res) => {
     const data = await response.json();
     match.status = 'in progress';
     match.quote = data[0].quote;
-    DB.updateMatch(match);
+    await DB.updateMatch(match);
     res.status(200).send({ match });
   } catch (err) {
     res.status(500).send({ msg: err.message });
@@ -94,7 +94,7 @@ router.put('/complete', async (req, res) => {
 
   match.status = 'complete';
 
-  DB.updateMatch(match);
+  await DB.updateMatch(match);
 
   res.send({ match });
 })
@@ -104,20 +104,31 @@ router.put('/complete', async (req, res) => {
  * Body: {  }
  * Returns: { [{match}, match] }
  */
-router.get('/userId/:userId', async(req, res) => {
+router.get('/userId/:userId', async (req, res) => {
   const userId = req.params.userId;
 
-  if (!userId) return res.status(400).send({ msg: "Request must include a userId" });
-  
-  const userMatches = DB.getMatchesByUserId(userId);
-  
-  const enriched = userMatches.map((m) => {
-    const player1 = DB.getUserById(m.player1Id);
-    const player2 = DB.getUserById(m.player2Id);
-    return { ...m, player1Email: player1.email, player2Email: player2.email }
-  });
+  if (!userId) {
+    return res.status(400).send({ msg: 'Request must include a userId' });
+  }
+
+  const userMatches = await DB.getMatchesByUserId(userId);
+
+  const enriched = await Promise.all(
+    userMatches.map(async (m) => {
+      const [player1, player2] = await Promise.all([
+        DB.getUserById(m.player1Id),
+        DB.getUserById(m.player2Id),
+      ]);
+
+      return {
+        ...m,
+        player1Email: player1?.email,
+        player2Email: player2?.email,
+      };
+    })
+  );
 
   res.send(enriched);
-})
+});
 
 module.exports = router;

@@ -29,7 +29,7 @@ async function createUser(email, password) {
         userId: uuid.v4(),
         token: uuid.v4(),
     };
-    DB.createUser(user);
+    await DB.createUser(user);
     return user;
 }
 
