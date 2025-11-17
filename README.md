@@ -118,18 +118,18 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Node.js/Express HTTP service** - I made a bunch of express services
 - [x] **Static middleware for frontend** - Done
-- [x] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [x] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [x] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [x] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Calls to third party endpoints** - Done. Calls a free quote api
+- [x] **Backend service endpoints** - Done. endpoints for Users, Friends, and Matches
+- [x] **Frontend calls service endpoints** - Done. Api calls for each service
+- [x] **Supports registration, login, logout, and restricted endpoint** - Done
 
 
 ## 🚀 DB deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+- [x] **Stores data in MongoDB** - Done. Moved storage for Friends, Matches, and Users to DB from backend server.
+- [x] **Stores credentials in MongoDB** - Done. All credentials including keys stored in Mongo
 
 ## 🚀 WebSocket deliverable
 
