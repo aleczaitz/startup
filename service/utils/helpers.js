@@ -16,6 +16,8 @@ async function findUser(field, value) {
 
   if (field === 'token') {
     return DB.getUserByToken(value);
+  } else if (field === 'userId') {
+    return DB.getUserById(value);
   }
   return DB.getUserByEmail(value);
 }

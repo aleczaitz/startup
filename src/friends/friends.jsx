@@ -10,9 +10,9 @@ export function Friends({user, userId}) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    if (user && userId) {
-      fetchFriends();
-    }
+    if (!user || !userId) return;
+    
+    fetchFriends();
     fetchUsers();
   }, [user, userId]);
 
@@ -27,7 +27,8 @@ export function Friends({user, userId}) {
     const friendfetches = friendships.map(async (f) => {
       const otherId = userId === f.initiatorId ? f.receiverId : f.initiatorId;
       const response = await fetch(`/api/users/id/${otherId}`);
-      return response.json();
+      const data = await response.json();
+      return data.user;
     })
 
     const friendObjects = await Promise.all(friendfetches);
@@ -92,7 +93,7 @@ export function Friends({user, userId}) {
       }
 
       const data = await response.json();
-      setUsers(Array.isArray(data) ? data : []); // defensive
+      setUsers(Array.isArray(data.user) ? data.user : []); // defensive
     } catch (err) {
       console.error(err);
       setErrorMessage(`Error: ${err.message ?? err}`);
