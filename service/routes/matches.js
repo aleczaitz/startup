@@ -127,7 +127,7 @@ router.get('/userId/:userId', async (req, res) => {
     })
   );
 
-  res.send(enriched);
+  res.send(enriched.slice().reverse());
 });
 
 module.exports = router;

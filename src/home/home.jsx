@@ -1,37 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './home.css';
-import matchesData from '../../matches.json';
 
-export function Home({user, userId}) {
 
+export  function Home({user, userId}) {
+  
   const [errorMessage, setErrorMessage] = useState('');
   const [matches, setMatches] = useState([]);
   const [matchEmail, setMatchEmail] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false);
+  
   useEffect(() => {
     if (user && userId) {
       fetchMatches(userId);
     }
   }, [user, userId])
-
-  async function fetchMatches() {
-    try {
-      const response = await fetch(`/api/matches/userId/${userId}`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        setErrorMessage(data.msg);
-        return;
-      }
-
-      setMatches(data);
-
-    } catch (err) {
-      setErrorMessage(`Error: ${err.message}`)
-      return;
-    }
-  }
-
+  
   async function createMatch(inviteeEmail) {
     try {
       const response = await fetch(`/api/matches/create`, {
@@ -44,15 +27,38 @@ export function Home({user, userId}) {
           'Content-Type': 'application/json; charset=UTF-8'
         }
       })
-
+  
       const data = await response.json();
-
+  
       if (response.ok) fetchMatches();
-
+  
     } catch (err) {
       setErrorMessage(`Error: ${err}`);
     }
   }
+
+  async function fetchMatches() {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/matches/userId/${userId}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data.msg);
+        setIsLoading(false);
+        return;
+      }
+
+      setMatches(data);
+      setIsLoading(false);
+
+    } catch (err) {
+      setErrorMessage(`Error: ${err.message}`)
+      setIsLoading(false);
+      return;
+    }
+  }
+
 
   async function acceptMatch(matchId) {
     try {
@@ -111,7 +117,7 @@ export function Home({user, userId}) {
             />
             <button className="primaryButton" onClick={() => createMatch(matchEmail)}>Start a new match</button>
         </section>
-        {user && <section className="listSection">
+        {!isLoading ? <section className="listSection">
             <h2>Matches</h2>
             <ul>
               {matches.map((m) => {
@@ -140,7 +146,9 @@ export function Home({user, userId}) {
                 )
               })}
             </ul>
-        </section>}
+        </section> :
+        <h1>Loading...</h1>
+        }
     </main>
   );
 }

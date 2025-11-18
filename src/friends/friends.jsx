@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './friends.css';
-import friendData from '../../friends.json'
+import { useNavigate } from 'react-router-dom';
 
 export function Friends({user, userId}) {
 
@@ -8,6 +8,8 @@ export function Friends({user, userId}) {
   const [friendEmail, setFriendEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [users, setUsers] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user || !userId) return;
@@ -100,6 +102,28 @@ export function Friends({user, userId}) {
     }
   }
 
+  async function handleStartMatch(inviteeEmail) {
+    try {
+      const response = await fetch(`/api/matches/create`, {
+        method: 'post',
+        body: JSON.stringify({
+          inviterId: userId,
+          inviteeEmail: inviteeEmail
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }
+      })
+  
+      const data = await response.json();
+  
+      if (response.ok) navigate('/home');
+  
+    } catch (err) {
+      setErrorMessage(`Error: ${err}`);
+    }
+  }
+
   return (
         <main>
             <section className="inputButtonSection">
@@ -122,7 +146,7 @@ export function Friends({user, userId}) {
               <ul>
                 {friends.length > 0 && friends.map((u) => (
                   <li key={u.userId} className="listItem"> {u.email}
-                  <button className="primaryButton">Start Match</button>
+                  <button className="primaryButton" onClick={() => handleStartMatch(u.email)}>Start Match</button>
                   </li>
                 ))}
               </ul>

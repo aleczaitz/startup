@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import { ErrorMessage } from '../components/errorMessage/errorMessage';
@@ -10,6 +10,12 @@ export function Login({user, setUser, userId, setUserId}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/home');
+    }
+  }, [user]);
 
   async function handleCreateUser() {
     loginOrCreateUser(`/api/auth/create`);
@@ -39,6 +45,7 @@ export function Login({user, setUser, userId, setUserId}) {
           setUserId(data.userId);
           localStorage.setItem('userId', data.userId);
           setErrorMsg('');
+          navigate('/home');
         } else {
           setErrorMsg(`Error: ${data.msg}`);
         }
