@@ -118,34 +118,37 @@ export  function Home({user, userId}) {
             <button className="primaryButton" onClick={() => createMatch(matchEmail)}>Start a new match</button>
         </section>
         {!isLoading ? <section className="listSection">
-            <h2>Matches</h2>
-            <ul>
-              {matches.map((m) => {
-                const opponentId = (userId === m.player1Id ? m.player2Id : m.player1Id);
-                const opponentEmail = (m.player1Id === opponentId ? m.player1Email : m.player2Email);
+            <h2>Matches (Simulation - functionality coming soon)</h2>
+            {matches.length !== 0 ?
+              <ul>
+                {matches.map((m) => {
+                  const opponentId = (userId === m.player1Id ? m.player2Id : m.player1Id);
+                  const opponentEmail = (m.player1Id === opponentId ? m.player1Email : m.player2Email);
 
-                return (
-                  <li key={m.matchId} className='matchListItem'>
-                    <div className='leftHalfContainer'>
-                      <h3>{opponentEmail}<span className='dateLabel'>{new Date(m.createdAt).toLocaleString()}</span></h3>
-                      {m.quote && (<span>{m.quote}</span>)}
-                    </div>
-                    <div className='rightHalfContainer'>
-                      <div className="statusTag">status: {m.status}</div>
-                      {m.status === 'pending' && m.player1Id !== userId && (
-                        <button className='accentButton' onClick={() => acceptMatch(m.matchId)}>accept invite</button>
-                      )}
-                      {m.status === 'in progress' && (
-                        <button className='accentButton' onClick={() => finishMatch(m.matchId)}>Finish match</button>
-                      )}
-                      {m.status === 'complete' && (
-                        <button className='primaryButton' onClick={() => createMatch(opponentEmail)}>Rematch</button>
-                      )}
-                    </div>
-                  </li>
-                )
-              })}
-            </ul>
+                  return (
+                    <li key={m.matchId} className='matchListItem'>
+                      <div className='leftHalfContainer'>
+                        <h3>{opponentEmail}<span className='dateLabel'>{new Date(m.createdAt).toLocaleString()}</span></h3>
+                        {m.quote && (<span>{m.quote}</span>)}
+                      </div>
+                      <div className='rightHalfContainer'>
+                        <div className="statusTag">status: {m.status}</div>
+                        {m.status === 'pending' && m.player1Id !== userId && (
+                          <button className='accentButton' onClick={() => acceptMatch(m.matchId)}>accept invite</button>
+                        )}
+                        {m.status === 'in progress' && (
+                          <button className='accentButton' onClick={() => finishMatch(m.matchId)}>Finish match</button>
+                        )}
+                        {m.status === 'complete' && (
+                          <button className='primaryButton' onClick={() => createMatch(opponentEmail)}>Rematch</button>
+                        )}
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul> : 
+              <h3>Go add some friends start start a match!</h3>
+            }
         </section> :
         <h1>Loading...</h1>
         }

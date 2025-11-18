@@ -95,7 +95,8 @@ export function Friends({user, userId}) {
       }
 
       const data = await response.json();
-      setUsers(Array.isArray(data.user) ? data.user : []); // defensive
+      console.log(data);
+      setUsers(Array.isArray(data) ? data : []); // defensive
     } catch (err) {
       console.error(err);
       setErrorMessage(`Error: ${err.message ?? err}`);
@@ -154,8 +155,8 @@ export function Friends({user, userId}) {
             <section className="listSection">
               <h2>Other Users</h2>
               <ul>
-              {users.length > 1 ? users.filter((u) => u.userId !== userId && !friends.some((f) => f.user.userId === u.userId) ).map((u) => (
-                <li key={u.userId} className="listItem">
+              {users.length > 1 ? users.filter((u) => u.userId !== userId && !friends.some((f) => f.userId === u.userId) ).map((u) => (
+                <li key={u.userId} className="listItem"> 
                   {u.email}
                   <button className="primaryButton" onClick={() => handleCreateFriendship(u.email)}>Add Friend</button>
                 </li>
