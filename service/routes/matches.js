@@ -60,13 +60,12 @@ router.put('/accept', async (req, res) => {
   }
 
   try {
-    const response = await fetch('https://api.api-ninjas.com/v2/randomquotes', {
-      headers: { 'X-Api-Key': process.env.API_NINJAS_KEY },
+    const response = await fetch('https://api.kanye.rest', {
     });
     if (!response.ok) throw new Error(`Quote API error: ${response.status}`);
     const data = await response.json();
     match.status = 'in progress';
-    match.quote = data[0].quote;
+    match.quote = data.quote;
     await DB.updateMatch(match);
     res.status(200).send({ match });
   } catch (err) {

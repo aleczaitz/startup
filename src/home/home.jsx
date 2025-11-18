@@ -46,7 +46,6 @@ export function Home({user, userId}) {
       })
 
       const data = await response.json();
-      console.log(data)
 
       if (response.ok) fetchMatches();
 
@@ -63,10 +62,12 @@ export function Home({user, userId}) {
         body: JSON.stringify({ matchId: matchId, accepterId: userId })
       })
 
+      const data = await response.json();
+
       if (response.ok) {
         await fetchMatches();
+        
       } else {
-        const data = await response.json();
         setErrorMessage(`Error: ${data.msg}`)
       }
 
@@ -85,7 +86,6 @@ export function Home({user, userId}) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
         fetchMatches();
       } else {
         console.log(data.msg)
