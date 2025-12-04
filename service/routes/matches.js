@@ -88,6 +88,8 @@ router.put('/complete', async (req, res) => {
 
   match.status = 'complete';
 
+  match.winner = user.email;
+
   await DB.updateMatch(match);
 
   res.send({ match });

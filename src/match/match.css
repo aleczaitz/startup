@@ -1,1 +1,31 @@
 @import url('../app.css');
+
+.quote-line {
+  font-family: monospace;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.correct {
+  color: #22c55e; /* green */
+}
+
+.incorrect {
+  color: #ef4444; /* red */
+  text-decoration: underline;
+}
+
+.remaining {
+  color: #9ca3af; /* gray */
+}
+
+.opponent-correct {
+  color: #3b82f6; /* blue */
+}
+
+.typing-input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  margin-top: 0.25rem;
+}

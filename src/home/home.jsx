@@ -85,28 +85,6 @@ export function Home({user, userId}) {
     }
   } 
 
-
-  async function finishMatch(matchId) {
-    try {
-      const response = await fetch(`/api/matches/complete`, {
-        method: 'put',
-        headers: {'Content-Type': 'application/json; charset=UTF-8'},
-        body: JSON.stringify({ matchId: matchId, userId: userId })
-      })
-      const data = await response.json();
-
-      if (response.ok) {
-        fetchMatches();
-      } else {
-        console.log(data.msg)
-      }
-
-    } catch (err) {
-      setErrorMessage(`Error: ${err.message}`)
-    }
-  }
-
-   
   return (
     <main>
         <section className="inputButtonSection">
@@ -122,7 +100,6 @@ export function Home({user, userId}) {
             <button className="primaryButton" onClick={() => createMatch(matchEmail)}>Start a new match</button>
         </section>
         {!isLoading ? <section className="listSection">
-            <h2>Matches (Simulation - functionality coming soon)</h2>
             {matches.length !== 0 ?
               <ul>
                 {matches.map((m) => {
@@ -133,7 +110,7 @@ export function Home({user, userId}) {
                     <li key={m.matchId} className='matchListItem'>
                       <div className='leftHalfContainer'>
                         <h3>{opponentEmail}<span className='dateLabel'>{new Date(m.createdAt).toLocaleString()}</span></h3>
-                        {m.quote && (<span>{m.quote}</span>)}
+                        {m.status === 'complete' && (<span>Winner: {m.winner}</span>)}
                       </div>
                       <div className='rightHalfContainer'>
                         <div className="statusTag">status: {m.status}</div>
