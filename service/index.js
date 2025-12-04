@@ -95,8 +95,29 @@ socketServer.on('connection', (socket) => {
       }
     }
   
-
     // handle progress message
+    if (msg.type === 'progress') {
+      const { matchId, userId, progress, wpm } = msg;
+
+      broadcast(matchId, {
+        type: 'opponent_progress',
+        userId,
+        progress,
+        wpm
+      })
+    }
+
+    if (msg.type == 'finished') {
+      const { matchId, userId, timeMs } = msg;
+      
+      broadcast(matchId, {
+        type: 'match_result',
+        winnerUserId: userId,
+        timeMs
+      });
+
+      // todo: save results to mongoDB
+    }
 
     // handle finished message
   });
