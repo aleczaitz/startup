@@ -55,11 +55,7 @@ export function Home({user, userId}) {
   
       const match = await response.json();
 
-      if (response.ok) {
-        // fetchMatches();
-        
-        navigate(`/match/${match.matchId}`)
-      } 
+      if (response.ok) navigate(`/match/${match.matchId}`);
   
     } catch (err) {
       setErrorMessage(`Error: ${err}`);
@@ -78,7 +74,7 @@ export function Home({user, userId}) {
       const data = await response.json();
 
       if (response.ok) {
-        await fetchMatches();
+        navigate(`/match/${matchId}`);
         
       } else {
         setErrorMessage(`Error: ${data.msg}`)

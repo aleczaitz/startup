@@ -1,13 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const uuid = require('uuid');
-const { findUser } = require('../utils/helpers');
+const { findUser, findMatchById } = require('../utils/helpers');
 const DB = require('../database.js');
-
-async function findMatchById(matchId) {
-  if (!matchId) return null;
-  return await DB.getMatchById(matchId);
-}
 
 /**
  * POST /api/matches/create

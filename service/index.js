@@ -1,7 +1,7 @@
 const path = require('path');
 const { WebSocketServer } = require('ws');
 const uuid = require('uuid');
-const { findMatchById } = require('./routes/matches');
+const { findMatchById } = require('./utils/helpers');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const express = require('express');

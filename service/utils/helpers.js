@@ -45,4 +45,9 @@ function setAuthCookie(res, authToken) {
     });
 }
 
-module.exports = { findUser, createUser, setAuthCookie, authCookieName };
+async function findMatchById(matchId) {
+  if (!matchId) return null;
+  return await DB.getMatchById(matchId);
+}
+
+module.exports = { findUser, createUser, setAuthCookie, authCookieName, findMatchById };

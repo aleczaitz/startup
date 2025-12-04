@@ -118,7 +118,7 @@ export function Friends({user, userId}) {
   
       const data = await response.json();
   
-      if (response.ok) navigate('/home');
+      if (response.ok) navigate(`/match/${match.matchId}`);
   
     } catch (err) {
       setErrorMessage(`Error: ${err}`);

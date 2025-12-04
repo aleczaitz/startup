@@ -9,7 +9,9 @@ export function Match(props) {
 
     useEffect(() => {
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        // const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        const ws = new WebSocket('ws://localhost:4000'); // or 'ws://localhost:4000/ws' if you later set path
+
 
         ws.onopen = () => {
             ws.send(
