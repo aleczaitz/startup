@@ -1,6 +1,7 @@
 const path = require('path');
 const { WebSocketServer } = require('ws');
 const uuid = require('uuid');
+const { findMatchById } = require('routes/matches')
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const express = require('express');
@@ -76,22 +77,14 @@ socketServer.on('connection', (socket) => {
       match.players.set(socket, { userId });
 
       if (match.players.size === 2 && !match.started) {
-
-          try {
-            const response = await fetch('https://api.kanye.rest', {
-            });
-            if (!response.ok) throw new Error(`Quote API error: ${response.status}`);
-            const quote = await response.json();
-          } catch {
-            return;
-          }
-
+        const quote = await findMatchById(matchId).quote;
         match.started = true;
         broadcast(matchId, {
-          type: "match_start",
+          type: 'match_start',
           text: quote,
-          startIme: Date.now() + 3000 // start in 3 seconds
+          startTime: Date.now() + 3000
         })
+
       }
     }
   
@@ -117,6 +110,7 @@ socketServer.on('connection', (socket) => {
       });
 
       // todo: save results to mongoDB
+
     }
 
     // handle finished message
