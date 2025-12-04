@@ -18,8 +18,8 @@ export function Match(props) {
 
     useEffect(() => {
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        // const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
-        const ws = new WebSocket('ws://localhost:4000'); // or 'ws://localhost:4000/ws' if you later set path
+        const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        // const ws = new WebSocket('ws://localhost:4000');
 
 
         ws.onopen = () => {
@@ -134,7 +134,7 @@ export function Match(props) {
             const data = await response.json();
 
             if (response.ok) {
-                
+
             } else {
             console.log(data.msg)
             }
