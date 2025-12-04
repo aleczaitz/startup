@@ -53,7 +53,7 @@ export default function App() {
                     <Route path='/home' element={<Home user={user} userId={userId}/>}/>
                     <Route path='/friends' element={<Friends user={user} userId={userId} />} />
                     <Route path='/about' element={<About />} />
-                    <Route path='/match' element={<Match user={user} userId={userId}/>}/>
+                    <Route path='/match/:matchId' element={<Match user={user} userId={userId}/>}/>
                     <Route path='*' element={<NotFound />} />
                 </Routes>
                 <footer>

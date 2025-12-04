@@ -54,10 +54,10 @@ export function Home({user, userId}) {
       })
   
       const match = await response.json();
-      console.log(match);
-  
+
       if (response.ok) {
         // fetchMatches();
+        
         navigate(`/match/${match.matchId}`)
       } 
   
