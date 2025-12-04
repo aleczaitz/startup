@@ -123,6 +123,18 @@ socketServer.on('connection', (socket) => {
   });
 
   // handle onclose()
+  socket.on('close', () => {
+    // Remove socket from any match it was in
+    for (const [matchId, match] of matches.entries()) {
+      if (match.players.has(socket)) {
+        match.players.delete(socket);
+        broadcast(matchId, {type: 'opponent_left' });
+        if (match.players.size === 0) {
+          matches.delete(matchId);
+        }
+      }
+    }
+  })
 })
 
 function broadcast(matchId, payload) {
