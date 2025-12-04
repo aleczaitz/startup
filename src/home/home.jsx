@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './home.css';
 
 
@@ -8,6 +9,7 @@ export function Home({user, userId}) {
   const [matches, setMatches] = useState([]);
   const [matchEmail, setMatchEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (user && userId) {
@@ -15,28 +17,6 @@ export function Home({user, userId}) {
     }
   }, [user, userId])
   
-  async function createMatch(inviteeEmail) {
-    try {
-      const response = await fetch(`/api/matches/create`, {
-        method: 'post',
-        body: JSON.stringify({
-          inviterId: userId,
-          inviteeEmail: inviteeEmail
-        }),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        }
-      })
-  
-      const data = await response.json();
-  
-      if (response.ok) fetchMatches();
-  
-    } catch (err) {
-      setErrorMessage(`Error: ${err}`);
-    }
-  }
-
   async function fetchMatches() {
     setIsLoading(true);
     try {
@@ -56,6 +36,33 @@ export function Home({user, userId}) {
       setErrorMessage(`Error: ${err.message}`)
       setIsLoading(false);
       return;
+    }
+  }
+
+
+  async function createMatch(inviteeEmail) {
+    try {
+      const response = await fetch(`/api/matches/create`, {
+        method: 'post',
+        body: JSON.stringify({
+          inviterId: userId,
+          inviteeEmail: inviteeEmail
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }
+      })
+  
+      const match = await response.json();
+      console.log(match);
+  
+      if (response.ok) {
+        // fetchMatches();
+        navigate(`/match/${match.matchId}`)
+      } 
+  
+    } catch (err) {
+      setErrorMessage(`Error: ${err}`);
     }
   }
 
@@ -81,6 +88,7 @@ export function Home({user, userId}) {
       setErrorMessage(`Error: ${err.message}`)
     }
   } 
+
 
   async function finishMatch(matchId) {
     try {

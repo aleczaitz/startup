@@ -7,6 +7,7 @@ import { Home } from './home/home';
 import { Friends } from './friends/friends';
 import { About } from './about/about';
 import { Drawer } from './components/drawer/drawer';
+import { Match } from './match/match';
 
 
 
@@ -52,6 +53,7 @@ export default function App() {
                     <Route path='/home' element={<Home user={user} userId={userId}/>}/>
                     <Route path='/friends' element={<Friends user={user} userId={userId} />} />
                     <Route path='/about' element={<About />} />
+                    <Route path='/match' element={<Match user={user} userId={userId}/>}/>
                     <Route path='*' element={<NotFound />} />
                 </Routes>
                 <footer>

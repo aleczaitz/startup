@@ -35,7 +35,7 @@ router.post('/create', async (req, res) => {
     createdAt: new Date()
   };
   await DB.createMatch(match);
-  res.status(200).send({ match });
+  res.status(200).send(match);
 });
 
 /**

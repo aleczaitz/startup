@@ -1,7 +1,7 @@
 const path = require('path');
 const { WebSocketServer } = require('ws');
 const uuid = require('uuid');
-const { findMatchById } = require('routes/matches')
+const { findMatchById } = require('./routes/matches');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const express = require('express');
@@ -21,7 +21,6 @@ const authRouter = require('./routes/auth');
 const friendshipRouter = require('./routes/friendships');
 const matchRouter = require('./routes/matches');
 const userRouter = require('./routes/users');
-const { match, match } = require('assert');
 
 // Mount routers
 app.use('/api/auth', authRouter);
