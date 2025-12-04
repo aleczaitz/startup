@@ -1,5 +1,6 @@
 const path = require('path');
 const { WebSocketServer } = require('ws');
+const uuid = require('uuid');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const express = require('express');
@@ -19,6 +20,7 @@ const authRouter = require('./routes/auth');
 const friendshipRouter = require('./routes/friendships');
 const matchRouter = require('./routes/matches');
 const userRouter = require('./routes/users');
+const { match, match } = require('assert');
 
 // Mount routers
 app.use('/api/auth', authRouter);
@@ -50,14 +52,49 @@ const socketServer = new WebSocketServer({ server });
 socketServer.on('connection', (socket) => {
   socket.isAlive = true;
 
-  socket.on('message', (raw) => {
+  // expects 
+  socket.on('message', async (raw) => {
     try {
-      const data = JSON.parse(raw);
+      const msg = JSON.parse(raw);
     } catch {
       return;
     }
 
     // handle join message
+    // This assumes that the match has already been made
+    if (msg.type === "join") {
+      const { matchId, userId }  = msg;
+
+      if (!matches.has(match)) {
+        matches.set(matchId, {
+          players: new Map(), // socket -> { userId }
+          started: false
+        })
+      }
+
+      const match = matches.get(matchId);
+      match.players.set(socket, { userId });
+
+      if (match.players.size === 2 && !match.started) {
+
+          try {
+            const response = await fetch('https://api.kanye.rest', {
+            });
+            if (!response.ok) throw new Error(`Quote API error: ${response.status}`);
+            const quote = await response.json();
+          } catch {
+            return;
+          }
+
+        match.started = true;
+        broadcast(matchId, {
+          type: "match_start",
+          text: quote,
+          startIme: Date.now() + 3000 // start in 3 seconds
+        })
+      }
+    }
+  
 
     // handle progress message
 
@@ -66,3 +103,14 @@ socketServer.on('connection', (socket) => {
 
   // handle onclose()
 })
+
+function broadcast(matchId, payload) {
+  const match = matches.get(matchId);
+  if (!matchId) return;
+  const json = JSON.stringify(payload);
+  for (const [socket] of match.players) {
+    if (socket.readyState === socket.OPEN) {
+      socket.send(json);
+    }
+  }
+}
