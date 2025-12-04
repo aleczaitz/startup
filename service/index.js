@@ -42,9 +42,27 @@ const server = app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
+const matches = new Map();
+
 // Create a websocket object
 const socketServer = new WebSocketServer({ server });
 
 socketServer.on('connection', (socket) => {
   socket.isAlive = true;
+
+  socket.on('message', (raw) => {
+    try {
+      const data = JSON.parse(raw);
+    } catch {
+      return;
+    }
+
+    // handle join message
+
+    // handle progress message
+
+    // handle finished message
+  });
+
+  // handle onclose()
 })
