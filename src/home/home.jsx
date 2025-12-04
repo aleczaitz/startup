@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 
 
-export  function Home({user, userId}) {
+export function Home({user, userId}) {
   
   const [errorMessage, setErrorMessage] = useState('');
   const [matches, setMatches] = useState([]);

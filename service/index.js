@@ -1,4 +1,5 @@
 const path = require('path');
+const { WebSocketServer } = require('ws');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const express = require('express');
@@ -37,6 +38,13 @@ app.use((_req, res) => {
 });
 
 // Start server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
+
+// Create a websocket object
+const socketServer = new WebSocketServer({ server });
+
+socketServer.on('connection', (socket) => {
+  socket.isAlive = true;
+})
